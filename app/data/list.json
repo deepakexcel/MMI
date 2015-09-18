@@ -1,0 +1,26 @@
+[{
+        "id": "1",
+        "short_code": "MOMRET",
+        "name": "Momentum Retail",
+        "org_level": "2",
+        "display_meta_JSON": null
+    }, {
+        "id": "2",
+        "short_code": "METRET",
+        "name": "Metropolitan Retail",
+        "org_level": "2",
+        "display_meta_JSON": null
+    }, {
+        "id": "3",
+        "short_code": "LISCO",
+        "name": "LisCoE",
+        "org_level": "2",
+        "display_meta_JSON": null
+    }, {
+        "id": "4",
+        "short_code": "MMI",
+        "name": "MMI",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }]
+

@@ -1,0 +1,38 @@
+<h4>Test List Page</h4>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Shortcode</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in list track by $index">
+            <td>{{item.short_code}}</td>
+            <td>{{item.name}}</td>
+            <td>
+                <button ng-click="editItem(item);" type="button" class="btn btn-link">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a ng-click="page(-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a  ng-click="page(-1)">1</a></li>
+            <li><a  ng-click="page(-1)">2</a></li>
+            <li><a  ng-click="page(-1)">3</a></li>
+            <li><a  ng-click="page(-1)">4</a></li>
+            <li><a  ng-click="page(-1)">5</a></li>
+            <li>
+                <a  ng-click="page(-1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</table>

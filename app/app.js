@@ -17,7 +17,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 .state('main', {
                     url: "/main",
                     abstract: true,
-                    templateUrl: "global/menu.html",
+                    templateUrl: "global/menu.html?time=" + new Date().getTime(),
                     controller: 'GlobalCtrl'
                 })
                 .state('main.login', {
@@ -32,7 +32,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 })
                 .state('main.dashboard', {
                     url: "/dashboard",
-                    templateUrl: "dashboard/dashboard.html",
+                    templateUrl: "dashboard/dashboard.html?time=" + new Date().getTime(),
                     controller: 'DashboardCtrl'
                 })
                 .state('main.logout', {
@@ -42,5 +42,5 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                         $state.go('main.login');
                     }
                 });
-        $urlRouterProvider.otherwise('/main/login');
+        $urlRouterProvider.otherwise('/main/dashboard');
     }]);

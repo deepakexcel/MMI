@@ -37,35 +37,34 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$localStora
                 short_code: item.short_code,
                 org_level: item.org_level
             };
+
             $('#myModal').modal({backdrop: true})
         };
         $scope.saveItem = function () {
             var url = 'bu/add';
             var values = {'name': $scope.item.name, 'short_code': $scope.item.short_code, 'org_level': $scope.item.org_level};
             var promise = ajaxRequest.send(url, values, 'POST');
+            //promise.then(function (data) {
+            //	console.log(data);
+            //}
+            console.log(promise);
+            console.log($scope.item.name);
+            console.log($scope.item.org_level);
+            console.log($scope.item.short_code);
             $('#myModal').modal('hide');
         };
         $scope.page = function () {
         };
-        $scope.editRecord = function () {
-            if (!$scope.item.short_code || !$scope.item.name || !$scope.item.org_level) {
-                alert("pls must fill all the field");
-            } else {
-                var url = 'bu/update';
-                var values = {'name': $scope.item.name, 'short_code': $scope.item.short_code, 'org_level': $scope.item.org_level};
-                var promise = ajaxRequest.send(url, values, 'POST');
-                $('#myModal').modal('hide');
-                console.log("Edit Call");
-                $('#myModal').modal('hide');
-            }
-        }
 
-        $scope.deleteItem = function (items) {
-            console.log(items.id);
-            var url = 'bu/delete';
-            var dataId = items.id;
-            var promise = ajaxRequest.send(url, dataId, 'POST');
-            console.log("Delete Call");
+        $scope.editRecord = function () {
+            var url = 'bu/update';
+            var values = {'name': $scope.item.name, 'short_code': $scope.item.short_code, 'org_level': $scope.item.org_level};
+            var promise = ajaxRequest.send(url, values, 'POST');
+            console.log(promise);
+            console.log($scope.item.name);
+            console.log($scope.item.org_level);
+            console.log($scope.item.short_code);
+            $('#myModal').modal('hide');
         }
 
     }]);

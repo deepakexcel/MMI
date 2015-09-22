@@ -5,9 +5,10 @@ ajaxService.factory('ajaxRequest',
             function ($http, $q, $log) {
                 return {
                     url: function (api) {
-                        return 'http://127.0.0.1:3000/' + api;
+                        return 'http://api.otrsw.co.za/mmi/test/' + api;
                     },
                     sendApi: function (url) {
+
                         var def = $q.defer();
 //                        delete $http.defaults.headers.common['X-Requested-With'];
                         var http = $http({
@@ -24,6 +25,8 @@ ajaxService.factory('ajaxRequest',
                         return def.promise;
                     },
                     send: function (api, data, method) {
+			console.log("under Ajax");
+	
                         var self = this;
                         if (!angular.isDefined(method)) {
                             method = 'POST';

@@ -101,8 +101,8 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                     function (e) {
                         console.log(e);
                         alert(e);
-                        //$scope.saveLoading = false;
-                        //$('#myModal').modal('hide');
+                        $scope.saveLoading = false;
+                        $('#myModal').modal('hide');
                     });
         };
         $scope.page = function () {
@@ -142,7 +142,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                             console.log(e);
                             alert(e);
                             $scope.saveLoading = false;
-                            // $('#myModal').modal('hide');
+                            $('#myModal').modal('hide');
                         });
                 console.log("Edit Call");
             }
@@ -173,7 +173,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
             promise.catch(
                     function (e) {
                         console.log(e);
-                        // $scope.deleteLoader = false;
+                        $scope.deleteLoader = false;
                         alert(e);
                     });
             console.log("Delete Call");

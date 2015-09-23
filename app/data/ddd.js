@@ -13,6 +13,8 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
             name: '',
             short_code: ''
         };
+//$scope.Delete="Delete"
+//$scope.method="delPopover";
         $scope.loading = true;
         var ajax = ajaxRequest.send('bu/list');
         // var ajax = ajaxRequest.sendApi('data/list.json');
@@ -101,8 +103,8 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                     function (e) {
                         console.log(e);
                         alert(e);
-                        $scope.saveLoading = false;
-                        $('#myModal').modal('hide');
+                        //$scope.saveLoading = false;
+                        //$('#myModal').modal('hide');
                     });
         };
         $scope.page = function () {
@@ -142,13 +144,16 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                             console.log(e);
                             alert(e);
                             $scope.saveLoading = false;
-                            $('#myModal').modal('hide');
+                            // $('#myModal').modal('hide');
                         });
                 console.log("Edit Call");
             }
         }
 
         $scope.deleteItem = function (items, indexs) {
+            //$scope.method="delPopover";
+            //$scope.Delete="Delete"
+            $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
             console.log(items.id);
             console.log(indexs);
@@ -173,10 +178,28 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
             promise.catch(
                     function (e) {
                         console.log(e);
-                        $scope.deleteLoader = false;
+                        // $scope.deleteLoader = false;
                         alert(e);
                     });
             console.log("Delete Call");
+        }
+
+
+        $scope.delPopover = function (item, index) {
+            console.log("jjjjjj");
+            console.log($scope.ifpopover);
+            //$scope.method="deleteItem";
+            $scope.Delete = "Confirm"
+            $scope.ifpopover = item.id;
+            var elem = angular.element(document.getElementById(index));
+            console.log(elem);
+            elem.popover('show');
+            elem.on('hidden.bs.popover', function () {
+                // do something…
+                console.log("popover");
+                $scope.ifpopover = item.id;
+
+            })
         }
 
     }]);

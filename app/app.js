@@ -1,13 +1,13 @@
 'use strict';
 //robust-catapult
 // Declare app level module which depends on views, and components
-var app = angular.module('OnTheRock', [
+var app = angular.module('MMI', [
     'ui.router',
-    'OnTheRock.login',
-    'OnTheRock.register',
-    'OnTheRock.dashboard',
-    'OnTheRock.global',
-    'OnTheRock.version'
+    'MMI.login',
+    'MMI.register',
+    'MMI.dashboard',
+    'MMI.global',
+    'MMI.version'
 ]);
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {

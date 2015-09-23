@@ -1,7 +1,7 @@
 'use strict';
 
-describe('OnTheRock.version module', function() {
-  beforeEach(module('OnTheRock.version'));
+describe('MMI.version module', function() {
+  beforeEach(module('MMI.version'));
 
   describe('version service', function() {
     it('should return current version', inject(function(version) {

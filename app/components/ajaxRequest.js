@@ -1,5 +1,5 @@
 'use strict';
-var ajaxService = angular.module('OnTheRock.ajaxService', []);
+var ajaxService = angular.module('MMI.ajaxService', []);
 ajaxService.factory('ajaxRequest',
         ['$http', '$q', '$log',
             function ($http, $q, $log) {

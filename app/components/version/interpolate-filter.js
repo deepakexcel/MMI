@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('OnTheRock.version.interpolate-filter', [])
+angular.module('MMI.version.interpolate-filter', [])
 
 .filter('interpolate', ['version', function(version) {
   return function(text) {

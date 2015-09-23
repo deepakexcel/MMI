@@ -1,5 +1,5 @@
 'use strict';
-var loginMod = angular.module('OnTheRock.login', ['OnTheRock.ajaxService', 'ui.router', 'ngStorage']);
+var loginMod = angular.module('MMI.login', ['MMI.ajaxService', 'ui.router', 'ngStorage']);
 loginMod.controller('LoginCtrl', ['$scope', 'ajaxRequest', '$state', '$localStorage',
     function ($scope, ajaxRequest, $state, $localStorage) {
         $scope.data = {

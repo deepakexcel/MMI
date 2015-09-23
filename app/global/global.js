@@ -1,5 +1,5 @@
 'use strict';
-var globalMod = angular.module('OnTheRock.global', ['OnTheRock.ajaxService', 'ui.router', 'ngStorage']);
+var globalMod = angular.module('MMI.global', ['MMI.ajaxService', 'ui.router', 'ngStorage']);
 globalMod.controller('GlobalCtrl', ['$scope', 'ajaxRequest', '$state', '$localStorage', '$rootScope',
     function ($scope, ajaxRequest, $state, $localStorage, $rootScope) {
         $scope.checkUser = function () {

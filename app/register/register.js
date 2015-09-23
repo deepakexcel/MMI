@@ -1,5 +1,5 @@
 'use strict';
-var registerMod = angular.module('OnTheRock.register', ['OnTheRock.ajaxService', 'ngStorage']);
+var registerMod = angular.module('MMI.register', ['MMI.ajaxService', 'ngStorage']);
 registerMod.controller('RegisterCtrl', ['$scope', 'ajaxRequest', '$state', '$localStorage',
     function ($scope, ajaxRequest, $state, $localStorage) {
         $scope.data = {

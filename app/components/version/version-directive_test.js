@@ -1,7 +1,7 @@
 'use strict';
 
-describe('OnTheRock.version module', function() {
-  beforeEach(module('OnTheRock.version'));
+describe('MMI.version module', function() {
+  beforeEach(module('MMI.version'));
 
   describe('app-version directive', function() {
     it('should print current version', function() {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('OnTheRock.version.version-directive', [])
+angular.module('MMI.version.version-directive', [])
 
 .directive('appVersion', ['version', function(version) {
   return function(scope, elm, attrs) {

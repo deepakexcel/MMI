@@ -1,4 +1,4 @@
-<div style="padding: 10px">
+    <div style="padding: 10px">
     <button ng-click="addItem();
         saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -28,12 +28,21 @@
                 <td>{{item.name}}</td>
                 <td>
                     <button ng-click="editItem(item, $index);
-                            saveLoading = false;" type="button" class="btn btn-success">Edit</button>
+                            saveLoading = false;" type="button" class="btn btn-info">Edit</button>
 
                   <!--<button ng-click="deleteItem(item, $index);" type="button" class="btn btn-warning" ng-show="ifpopover">Confirm</button>-->
-	<a tabindex="0"  class="btn btn-danger"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="focus" title="Confirmation" data-content="Are you sure you want to delete business unit {{item.name}}?"  data-placement="top">
-<span ng-click="delPopover(item, $index);" ng-hide="ifpopover==item.id" >Delete</span><span ng-click="deleteItem(item, $index);" ng-show="ifpopover==item.id">Confirm</span>
+
+	<!--<a tabindex="0"  class="btn btn-danger" ng-click="delPopover(item, $index);" ng-blur="hidePopove(item, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="click"  title="Confirmation <button ng-click='hidePopove(item, $index)' class='glyphicon glyphicon-remove'></button>" 
+ data-content="Are you sure you want to delete business unit {{item.name}}?" data-html="true"  data-placement="top">
+<span  ng-hide="ifpopover==item.id" >Delete</span>
+<span  ng-show="ifpopover==item.id">Confirm</span>
+</a>-->
+
+<a tabindex="0"  class="btn btn-danger" ng-click="delPopover(item, $index); popover" ng-blur="hidePopove(item, $index)" id= "{{$index}}" role="button" >
+<span  ng-hide="ifpopover==item.id" >Delete</span>
+<span  ng-show="ifpopover==item.id">Confirm</span>
 </a>
+
 	<!--<a tabindex="0"  class="btn btn-danger" ng-click="deleteItem(item, $index);" id= "{{$index}}" role="button" data-toggle="popover" data-trigger="focus" title="Confirmation" data-content="Are you sure you want to delete business unit {{item.name}}?" ng-show="ifpopover==item.id" data-placement="top">
 Confirm
 </a>-->

@@ -11,14 +11,19 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
         $scope.list = {};
         $scope.item = {
             name: '',
-            short_code: ''
+            short_code: '',
+	    org_level: '',
+	    status: ''
         };
 //$scope.Delete="Delete"
-//$scope.method="delPopover";
+//$scope.method="delPopover";&times;
         $scope.loading = true;
         var ajax = ajaxRequest.send('bu/list');
         // var ajax = ajaxRequest.sendApi('data/list.json');
         ajax.then(function (data) {
+	for(var i=0; i<data.length; i++){
+		data[i].status=false;
+	}
             $scope.list = data;
             $scope.loading = false;
         });
@@ -27,7 +32,9 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
             $scope.model_title = 'Add';
             $scope.item = {
                 name: '',
-                short_code: ''
+                short_code: '',
+		org_level: '',
+		status: ''
             };
         };
         $scope.editItem = function (item, index) {
@@ -39,15 +46,18 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
             //Just a question - why do you create a "new" item and not pass the item you got?
             //Problem was caused by you not passing the id, so the API does not know which
             //item to update
-
-
             //I stuck to your approach, and simply added the id back in
+
+	console.log("ORG :-" + item.org_level);
+	var orgLevel = parseInt(item.org_level);
+	//if(isNumeric(nn)){console.log("number")}else{console.log("string")}
             $scope.item = {
                 id: item.id,
                 name: item.name,
                 short_code: item.short_code,
-                org_level: item.org_level,
-                index: index
+                org_level: orgLevel,
+                index: index,
+		status: item.status
             };
             $('#myModal').modal({backdrop: true})
         };
@@ -89,6 +99,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                             myobj.name = $scope.item.name;
                             myobj.short_code = $scope.item.short_code;
                             myobj.org_level = $scope.item.org_level;
+			    myobj.status = false;
                             $scope.list.unshift(myobj);
                             $('#myModal').modal('hide');
                         } else {
@@ -151,8 +162,6 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
         }
 
         $scope.deleteItem = function (items, indexs) {
-            //$scope.method="delPopover";
-            //$scope.Delete="Delete"
             $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
             console.log(items.id);
@@ -186,20 +195,47 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
 
 
         $scope.delPopover = function (item, index) {
+		
             console.log("jjjjjj");
-            console.log($scope.ifpopover);
+		console.log(item.status);
+            //console.log($scope.ifpopover);
+		if(item.status == false){
+			item.status=true;
             //$scope.method="deleteItem";
             $scope.Delete = "Confirm"
             $scope.ifpopover = item.id;
             var elem = angular.element(document.getElementById(index));
             console.log(elem);
-            elem.popover('show');
-            elem.on('hidden.bs.popover', function () {
+var options ={
+	//container: 'body',
+	content: "Are you sure you want to delete business unit {{item.name}}?",
+	title: "Confirmation <button ng-click='hidePopove(item, $index)' class='glyphicon glyphicon-remove'></button>",
+	placement: "top",
+	html: "true",
+	trigger: "click",
+}
+	elem.popover(options);
+           /* elem.on('hidden.bs.popover', function () {
                 // do something…
+		elem.popover('hide')
                 console.log("popover");
                 $scope.ifpopover = item.id;
 
-            })
+            })*/	
+	}else {
+		console.log("else");
+		item.status=false;
+		$scope.deleteItem(item, index);
+		}	
+	
+        }
+
+	$scope.hidePopove = function(item, index){
+console.log("call");
+            var elem = angular.element(document.getElementById(index));
+                elem.popover('hide');
+		item.status=false;
+		$scope.ifpopover = "";
         }
 
     }]);

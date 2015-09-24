@@ -162,3 +162,15 @@
   height: 24px;
 }
 
+.btnspn{
+}
+
+.crossbtn{
+	background: none;
+  border: none;
+  position: absolute;
+  right: 5px;
+  top: 8px;
+  color: grey;
+		}
+

@@ -6,8 +6,10 @@ var app = angular.module('MMI', [
     'MMI.login',
     'MMI.register',
     'MMI.dashboard',
+    'MMI.objective',
     'MMI.global',
     'MMI.version'
+    
 ]);
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -34,6 +36,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     url: "/dashboard",
                     templateUrl: "dashboard/dashboard.html?time=" + new Date().getTime(),
                     controller: 'DashboardCtrl'
+                })
+                .state('main.objective', {
+                    url: "/objective",
+                    templateUrl: "objective/Objective.html",
+                    controller: 'ObjectiveCtrl'
                 })
                 .state('main.logout', {
                     url: "/dashboard",

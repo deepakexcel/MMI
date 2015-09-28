@@ -1,15 +1,15 @@
 
 'use strict';
-var dashMod = angular.module('MMI.objective', ['MMI.ajaxService', 'ngStorage']);
-dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
+var dashMod = angular.module('MMI.initiative', ['MMI.ajaxService', 'ngStorage']);
+dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
     function ($scope, ajaxRequest, $q, $timeout) {
 
         $scope.model_title = 'Add';
-        $scope.objective_list = {};
+        $scope.initiative_list = {};
         $scope.item = {
-            objective_name: '',
-            business_unit: '',
-            description: '',
+            initiative_name: '',
+            short_code: '',
+            org_level: '',
             status: '',
             unit_name: ''
         };
@@ -37,17 +37,17 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                     }
                 }
             }
-            $scope.objective_list = data;
+            $scope.initiative_list = data;
             console.log(data);
             $scope.loading = false;
         });
 
 
-        $scope.addItem = function () {
+        $scope.addInitiativeItem = function () {
             $scope.buttonShow = true;
             $scope.model_title = 'Add';
             $scope.item = {
-                objective_name: '',
+                initiative_name: '',
                 business_unit: '',
                 description: '',
                 status: '',
@@ -56,7 +56,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
         };
 
 
-        $scope.editObjectiveItem = function (item, index) {
+        $scope.editInitiativeItem = function (item, index) {
             console.log(item);
             $scope.buttonShow = false;
             console.log('In editItem function - lets log item we have:');
@@ -69,7 +69,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             }
             $scope.item = {
                 id: item.id,
-                objective_name: item.name,
+                initiative_name: item.name,
                 business_unit: item.unit_name,
                 description: item.description,
                 index: index,
@@ -77,18 +77,18 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 unit_name: item.unit_name
 
             };
-            $('#objective_Modal').modal({backdrop: true})
+            $('#initiative_Modal').modal({backdrop: true})
         };
 
-        $scope.objective_list = [];
-        $scope.saveObjectiveItem = function () {
+        $scope.initiative_list = [];
+        $scope.saveInitiativeItem = function () {
 
-            if (!$scope.item.objective_name && !$scope.item.business_unit) {
+            if (!$scope.item.initiative_name && !$scope.item.business_unit) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
-            } else if (!$scope.item.objective_name) {
+            } else if (!$scope.item.initiative_name) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
             } else if (!$scope.item.business_unit) {
@@ -103,27 +103,27 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                     }
                 }
                 var myobj = {};
-                var url = 'bo/add';
-                var values = {"business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
+                var url = 'bi/add';
+                var values = {"business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.initiative_name};
                 var promise = ajaxRequest.send(url, values, 'POST');
                 promise.then(
                         function (result) {
                             if (result.status == "OK") {
                                 $scope.saveLoading = false;
                                 myobj.id = result.lastid;
-                                myobj.name = $scope.item.objective_name;
+                                myobj.name = $scope.item.initiative_name;
                                 myobj.business_unit_id = "110";
                                 myobj.description = $scope.item.description;
                                 myobj.status = false;
                                 myobj.unit_name = $scope.item.business_unit;
-                                $scope.objective_list.unshift(myobj);
-                                $('#objective_Modal').modal('hide');
+                                $scope.initiative_list.unshift(myobj);
+                                $('#initiative_Modal').modal('hide');
                             } else {
                                 console.log(data.error);
                                 //alert(result.error);
                                 $scope.alertmsg = true;
                                 $scope.saveLoading = false;
-                                $('#objective_Modal').modal('hide');
+                                $('#initiative_Modal').modal('hide');
                             }
                         });
                 promise.catch(
@@ -135,16 +135,16 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
         };
         $scope.page = function () {
         };
-        $scope.editObjectiveRecord = function (indexx) {
+        $scope.editInitiativeRecord = function (indexx) {
             var bussUnit = 0;
-            if (!$scope.item.objective_name && !$scope.item.business_unit) {
+            if (!$scope.item.initiative_name && !$scope.item.business_unit) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
                 $scope.saveLoading = false;
                 //alert("pls must fill all the field");
-            } else if (!$scope.item.objective_name) {
+            } else if (!$scope.item.initiative_name) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
             } else if (!$scope.item.business_unit) {
@@ -157,24 +157,24 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                         bussUnit = unitList2[i].id;
                     }
                 }
-                var url = 'bo/update';
+                var url = 'bi/update';
                 //Id needs to be included to the API call:
-                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name, "unit_name": $scope.item.business_unit};
-                var values = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
+                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.initiative_name, "unit_name": $scope.item.business_unit};
+                var values = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.initiative_name};
                 console.log("Going to send update. Values listed below:");
                 var promise = ajaxRequest.send(url, values, 'POST');
                 promise.then(
                         function (result) {
                             if (result.status == "OK") {
-                                $scope.objective_list.splice($scope.item.index, 1, val);
+                                $scope.initiative_list.splice($scope.item.index, 1, val);
                                 $scope.saveLoading = false;
-                                $('#objective_Modal').modal('hide');
+                                $('#initiative_Modal').modal('hide');
                             } else {
                                 console.log(result.error);
                                 // alert(result.error);
                                 $scope.alertmsg = true;
                                 $scope.saveLoading = false;
-                                $('#objective_Modal').modal('hide');
+                                $('#initiative_Modal').modal('hide');
                             }
                         });
                 promise.catch(
@@ -187,17 +187,17 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             }
         }
 
-        $scope.deleteObjectiveItem = function (items, indexs) {
+        $scope.deleteInitiativeItem = function (items, indexs) {
             $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
-            var url = 'bo/delete';
+            var url = 'bi/delete';
             var dataId = {"id": items.id};
             var promise = ajaxRequest.send(url, dataId, 'POST');
             promise.then(
                     function (result) {
                         $scope.deleteLoader = false;
                         if (result.status == "OK") {
-                            $scope.objective_list.splice(indexs, 1);
+                            $scope.initiative_list.splice(indexs, 1);
                         } else {
                             console.log(result.error);
                             //alert(result.error);
@@ -211,7 +211,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                         $scope.alertmsg = true;
                     });
         }
-        $scope.objective_delPopover = function (item, index) {
+        $scope.initiative_delPopover = function (item, index) {
             var elem = angular.element(document.getElementById(index));
             if (item.status == false) {
                 item.status = true;
@@ -224,7 +224,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 console.log("else");
                 elem.popover('hide');
                 item.status = false;
-                $scope.deleteObjectiveItem(item, index);
+                $scope.deleteInitiativeItem(item, index);
             }
         }
 
@@ -236,7 +236,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             $scope.ifpopover = "";
         }
 
-        $scope.findObjectiveRecord = function () {
+        $scope.findInitiativeRecord = function () {
             $scope.errorFind = "";
             if (!$scope.search) {
                 $scope.errorFind = "has-error has-feedback";
@@ -247,8 +247,8 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 }, 5000);
             } else {
                 console.log($scope.search);
-                //console.log(objective_list);
-                var url = 'bo/find';
+                //console.log(initiative_list);
+                var url = 'bi/find';
                 var srchVal = {"id": $scope.search};
                 var promise = ajaxRequest.send(url, srchVal, 'POST');
                 promise.then(
@@ -277,7 +277,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
         $scope.hideAlert = function () {
             $timeout(function () {
                 $scope.alertmsg = false;
-            }, 10000);
+            }, 100000);
         }
         $scope.errorHideName = function () {
             $scope.errorName = "";

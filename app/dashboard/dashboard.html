@@ -6,6 +6,10 @@
     </button>
 
     <h4>Business Unit List</h4>
+    <div class="alert alert-danger alert-dismissible" role="alert" style="margin: 10px 0px 10px 0px;" ng-show="unitAlertMsg">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Error!</strong> Better check yourself, you're not looking too good.
+    </div>
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
@@ -50,18 +54,21 @@
 
 
                         <form>
-                            <div class="form-group">
+                            <div class="form-group {{errorShortCode}}">
                                 <label>Short Code</label>
-                                <input type="text" value="{{item.short_code}}" ng-model="item.short_code" class="form-control" id="short_code" placeholder="Short Code">
+                                <input type="text" value="{{item.short_code}}" ng-model="item.short_code" class="form-control" id="short_code" placeholder="Short Code" ng-focus="errorHideShort()">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="shortCodeClose"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{errorUnitName}}">
                                 <label>Name</label>
-                                <input type="text" value="{{item.name}}" ng-model="item.name" class="form-control" id="name" placeholder="Name">
+                                <input type="text" value="{{item.name}}" ng-model="item.name" class="form-control" id="name" placeholder="Name" ng-focus="errorHideUnit()">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="unitNameClose"></span>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group {{errorOrgLevel}}">
                                 <label>Org-Level</label>
-                                <input type="number" value="{{item.org_level}}" ng-model="item.org_level" class="form-control" id="orglevel" placeholder="Org-Level">
+                                <input type="number" value="{{item.org_level}}" ng-model="item.org_level" class="form-control" id="orglevel" placeholder="Org-Level" ng-focus="errorHideOrg()">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="orgClose"></span>
                             </div>
                         </form>
 
@@ -72,10 +79,8 @@
 
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button ng-click="saveItem();
-                            saveLoading = true;" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                        <button ng-click="editRecord($index);
-                            saveLoading = true;" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
+                        <button ng-click="saveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
+                        <button ng-click="editRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

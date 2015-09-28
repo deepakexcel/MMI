@@ -1,23 +1,23 @@
 <div style="padding: 0px">
-    <button ng-click="addItem();
-                saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
+    <button ng-click="addInitiativeItem();
+                saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#initiative_Modal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         Add
     </button>
 
     <div class="col-lg-12" style="padding: 5px 0 15px 0;">
-        <h4 style="float: left;">Business Objective List</h4>
+        <h4 style="float: left;">Business Initiative List</h4>
         <div class="input-group {{errorFind}}">
             <input type="text" class="form-control" ng-model="search" placeholder="Search for..." style="width: 40%; float: right;" ng-focus="findError()" aria-describedby="inputError2Status">
             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="findClose"></span>
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="findObjectiveRecord()">Go!</button>
+                <button class="btn btn-default" type="button" ng-click="findInitiativeRecord()">Go!</button>
             </span>
         </div><!-- /input-group -->
     </div><!-- /.col-lg-12 -->
 </div><!-- /.row -->
 
-<div class="alert alert-danger alert-dismissible" role="alert" style="margin: 10px 0px 10px 0px; clear: both;" ng-show="alertmsg">
+<div class="alert alert-danger alert-dismissible" role="alert" style="margin: 10px 0px 10px 0px;" ng-show="alertmsg">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>Error!</strong> Better check yourself, you're not looking too good.
 </div>
@@ -39,25 +39,25 @@
                 </div>
             </td> 
         </tr>
-        <tr ng-repeat="itemObj in objective_list track by $index" ng-show="!loading">
-            <td>{{itemObj.name}}</td>
-            <td>{{itemObj.unit_name}}</td>
-            <td>{{itemObj.description}}</td>
+        <tr ng-repeat="itemInit in initiative_list track by $index" ng-show="!loading">
+            <td>{{itemInit.name}}</td>
+            <td>{{itemInit.unit_name}}</td>
+            <td>{{itemInit.description}}</td>
             <td>
-                <button ng-click="editObjectiveItem(itemObj, $index);
+                <button ng-click="editInitiativeItem(itemInit, $index);
                             saveLoading = false;" type="button" class="btn btn-info">Edit</button>
-                <a tabindex="0" style="width:70px;"  class="btn btn-danger" ng-click="objective_delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
-                   data-content="Are you sure you want to delete business unit {{itemObj.objective_name}}?" data-html="true"  data-placement="top">
-                    <span  ng-hide="ifpopover == itemObj.id" >Delete</span>
-                    <span  ng-show="ifpopover == itemObj.id">Confirm</span>
+                <a tabindex="0" style="width:70px;"  class="btn btn-danger" ng-click="initiative_delPopover(itemInit, $index);" ng-blur="hidePopove(itemInit, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemInit, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
+                   data-content="Are you sure you want to delete business unit {{itemInit.initiative_name}}?" data-html="true"  data-placement="top">
+                    <span  ng-hide="ifpopover == itemInit.id" >Delete</span>
+                    <span  ng-show="ifpopover == itemInit.id">Confirm</span>
                 </a>
-                <div class="three-quarters-loader" ng-show="deleteLoader == itemObj.id" style="margin: 0px 0 -10px 5px; position: absolute;">
+                <div class="three-quarters-loader" ng-show="deleteLoader == itemInit.id" style="margin: 0px 0 -10px 5px; position: absolute;">
                 </div>
             </td>
         </tr>
     </tbody>
 
-    <div class="modal fade" id="objective_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="initiative_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -71,13 +71,13 @@
 
                         <div class="form-group {{errorName}}">
                             <label>Name</label>
-                            <input type="text" value="{{item.objective_name}}" ng-model="item.objective_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
+                            <input type="text" value="{{item.initiative_name}}" ng-model="item.initiative_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
                         </div>
                         <div class="form-group {{errorUnitName}}">
                             <label>Business Unit Name</label>
                             <select class="form-control" ng-model="item.business_unit" value="hellooogihfd" ng-focus="errorHideSelect()">
-                                <option  ng-repeat="itemObj in unitList track by $index">{{itemObj.displayName}}</option></select>
+                                <option  ng-repeat="itemInit in unitList track by $index">{{itemInit.displayName}}</option></select>
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
                         </div>
 
@@ -94,8 +94,8 @@
 
                     </div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button ng-click="saveObjectiveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                    <button ng-click="editObjectiveRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
+                    <button ng-click="saveInitiativeItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
+                    <button ng-click="editInitiativeRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

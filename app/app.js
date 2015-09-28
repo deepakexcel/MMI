@@ -7,6 +7,7 @@ var app = angular.module('MMI', [
     'MMI.register',
     'MMI.dashboard',
     'MMI.objective',
+//    'MMI.initiative',
     'MMI.global',
     'MMI.version'
     
@@ -39,9 +40,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 })
                 .state('main.objective', {
                     url: "/objective",
-                    templateUrl: "objective/Objective.html?time=" + new Date().getTime(),
+                    templateUrl: "objective/objective.html?time=" + new Date().getTime(),
                     controller: 'ObjectiveCtrl'
                 })
+//                .state('main.initiative', {
+//                    url: "/initiative",
+//                    templateUrl: "initiative/initiative.html?time=" + new Date().getTime(),
+//                    controller: 'InitiativeCtrl'
+//                })
                 .state('main.logout', {
                     url: "/dashboard",
                     controller: function ($state, $localStorage) {

@@ -1,7 +1,7 @@
 'use strict';
 var dashMod = angular.module('MMI.dashboard', ['MMI.ajaxService', 'ngStorage']);
-dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
-    function ($scope, ajaxRequest, $q) {
+dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
+    function ($scope, ajaxRequest, $q, $timeout) {
 
 //        if (!$localStorage.user) {
 //            $state.go('main.login')
@@ -57,40 +57,76 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
         };
         $scope.list = [];
         $scope.saveItem = function () {
-            var myobj = {};
-            var url = 'bu/add';
-            var values = {"name": $scope.item.name, "short_code": $scope.item.short_code, "org_level": $scope.item.org_level, };
-            var promise = ajaxRequest.send(url, values, 'POST');
-            promise.then(
-                    function (result) {
-                        if (result.status == "OK") {
-                            $scope.saveLoading = false;
-                            myobj.id = result.lastid;
-                            myobj.name = $scope.item.name;
-                            myobj.short_code = $scope.item.short_code;
-                            myobj.org_level = $scope.item.org_level;
-                            myobj.status = false;
-                            $scope.list.unshift(myobj);
-                            $('#unit_Modal').modal('hide');
-                        } else {
-                            console.log(data.error);
-                            alert(result.error);
-                            $scope.saveLoading = false;
-                            $('#unit_Modal').modal('hide');
-                        }
-                    });
-            promise.catch(
-                    function (e) {
-                        console.log(e);
-                        alert(e);
-                    });
+
+            if (!$scope.item.short_code && !$scope.item.name && !$scope.item.org_level) {
+                $scope.errorShortCode = "has-error has-feedback";
+                $scope.shortCodeClose = true;
+                $scope.errorUnitName = "has-error has-feedback";
+                $scope.unitNameClose = true;
+                $scope.errorOrgLevel = "has-error has-feedback";
+                $scope.orgClose = true;
+            } else if (!$scope.item.short_code) {
+                $scope.errorShortCode = "has-error has-feedback";
+                $scope.shortCodeClose = true;
+            } else if (!$scope.item.name) {
+                $scope.errorUnitName = "has-error has-feedback";
+                $scope.unitNameClose = true;
+            } else if (!$scope.item.org_level) {
+                $scope.errorOrgLevel = "has-error has-feedback";
+                $scope.orgClose = true;
+            } else {
+                $scope.saveLoading = true;
+                var myobj = {};
+                var url = 'bu/add';
+                var values = {"name": $scope.item.name, "short_code": $scope.item.short_code, "org_level": $scope.item.org_level, };
+                var promise = ajaxRequest.send(url, values, 'POST');
+                promise.then(
+                        function (result) {
+                            if (result.status == "OK") {
+                                $scope.saveLoading = false;
+                                myobj.id = result.lastid;
+                                myobj.name = $scope.item.name;
+                                myobj.short_code = $scope.item.short_code;
+                                myobj.org_level = $scope.item.org_level;
+                                myobj.status = false;
+                                $scope.list.unshift(myobj);
+                                $('#unit_Modal').modal('hide');
+                            } else {
+                                console.log(data.error);
+                                $scope.unitAlertMsg = true;
+                                $scope.saveLoading = false;
+                                $('#unit_Modal').modal('hide');
+                            }
+                        });
+                promise.catch(
+                        function (e) {
+                            console.log(e);
+                            $scope.unitAlertMsg = true;
+			    $scope.saveLoading = false;
+                        });
+            }
         };
         $scope.page = function () {
         };
         $scope.editRecord = function (indexx) {
-            if (!$scope.item.short_code || !$scope.item.name || !$scope.item.org_level) {
-                alert("pls must fill all the field");
+            if (!$scope.item.short_code && !$scope.item.name && !$scope.item.org_level) {
+                $scope.errorShortCode = "has-error has-feedback";
+                $scope.shortCodeClose = true;
+                $scope.errorUnitName = "has-error has-feedback";
+                $scope.unitNameClose = true;
+                $scope.errorOrgLevel = "has-error has-feedback";
+                $scope.orgClose = true;
+            } else if (!$scope.item.short_code) {
+                $scope.errorShortCode = "has-error has-feedback";
+                $scope.shortCodeClose = true;
+            } else if (!$scope.item.name) {
+                $scope.errorUnitName = "has-error has-feedback";
+                $scope.unitNameClose = true;
+            } else if (!$scope.item.org_level) {
+                $scope.errorOrgLevel = "has-error has-feedback";
+                $scope.orgClose = true;
             } else {
+                $scope.saveLoading = true;
                 var url = 'bu/update';
                 //Id needs to be included to the API call:
                 var values = {"id": $scope.item.id, "name": $scope.item.name, "short_code": $scope.item.short_code, "org_level": $scope.item.org_level};
@@ -104,7 +140,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
                                 $('#unit_Modal').modal('hide');
                             } else {
                                 console.log(result.error);
-                                alert(result.error);
+                                $scope.unitAlertMsg = true;
                                 $scope.saveLoading = false;
                                 $('#unit_Modal').modal('hide');
                             }
@@ -112,7 +148,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
                 promise.catch(
                         function (e) {
                             console.log(e);
-                            alert(e);
+                            $scope.unitAlertMsg = true;
                             $scope.saveLoading = false;
                         });
             }
@@ -121,7 +157,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
         $scope.deleteItem = function (items, indexs) {
             $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
-            var url = 'bu/delete';
+            var url = 'buu/delete';
             var dataId = {"id": items.id};
             var promise = ajaxRequest.send(url, dataId, 'POST');
             promise.then(
@@ -131,38 +167,58 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
                             $scope.list.splice(indexs, 1);
                         } else {
                             console.log(result.error);
-                            alert(result.error);
+                            $scope.unitAlertMsg = true;
+			    $scope.deleteLoader = false;
                         }
                     });
             promise.catch(
                     function (e) {
                         console.log(e);
-                        alert(e);
-             });
+                        $scope.unitAlertMsg = true;
+			$scope.deleteLoader = false;
+                    });
         }
         $scope.delPopover = function (item, index) {
-		var elem = angular.element(document.getElementById(index));
+            var elem = angular.element(document.getElementById(index));
             if (item.status == false) {
                 item.status = true;
                 $scope.Delete = "Confirm";
                 $scope.ifpopover = item.id;
-		
-                 elem.popover('show');
-				
+
+                elem.popover('show');
+
             } else {
                 console.log("else");
-		elem.popover('hide');
+                elem.popover('hide');
                 item.status = false;
                 $scope.deleteItem(item, index);
             }
         }
 
         $scope.hidePopove = function (item, index) {
-		item.status = false;
+            item.status = false;
             var elem = angular.element(document.getElementById(index));
             elem.popover('hide');
-            
+
             $scope.ifpopover = "";
+        }
+
+        $scope.hideAlertUnit = function () {
+            $timeout(function () {
+                $scope.unitAlertMsg = false;
+            }, 100000);
+        }
+        $scope.errorHideShort = function () {
+            $scope.errorShortCode = "";
+            $scope.shortCodeClose = false;
+        }
+        $scope.errorHideUnit = function () {
+            $scope.errorUnitName = "";
+            $scope.unitNameClose = false;
+        }
+        $scope.errorHideOrg = function () {
+            $scope.errorOrgLevel = "";
+            $scope.orgClose = false;
         }
 
     }]);

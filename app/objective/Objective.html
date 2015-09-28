@@ -1,16 +1,27 @@
 <div style="padding: 10px">
     <button ng-click="addItem();
-        saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+        saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         Add
     </button>
 
-    <h4>Business Objective List</h4>
+   <div class="col-lg-12">
+<h4 style="width: 32%; float: left;">Business Objective List</h4>
+    <div class="input-group">
+      <input type="text" class="form-control" ng-model="search" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="findObjectiveRecord()">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-12 -->
+</div><!-- /.row -->
+    
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
                
                 <th>Name</th>
+		<th>Business Unit Name</th>
 		<th>Description</th>
                 <th>Actions</th>
             </tr>
@@ -23,14 +34,15 @@
                     </div>
                 </td> 
             </tr>
-            <tr ng-repeat="itemObj in list track by $index" ng-show="!loading">
+            <tr ng-repeat="itemObj in objective_list track by $index" ng-show="!loading">
                 <td>{{itemObj.name}}</td>
+		<td>{{itemObj.unit_name}}</td>
                 <td>{{itemObj.description}}</td>
                 <td>
-                    <button ng-click="editItem(itemObj, $index);
+                    <button ng-click="editObjectiveItem(itemObj, $index);
                             saveLoading = false;" type="button" class="btn btn-info">Edit</button>
-                    <a tabindex="0" style="width:70px;"  class="btn btn-danger" ng-click="delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
-                       data-content="Are you sure you want to delete business unit {{itemObj.name}}?" data-html="true"  data-placement="top">
+                    <a tabindex="0" style="width:70px;"  class="btn btn-danger" ng-click="objective_delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
+                       data-content="Are you sure you want to delete business unit {{itemObj.objective_name}}?" data-html="true"  data-placement="top">
                         <span  ng-hide="ifpopover == itemObj.id" >Delete</span>
                         <span  ng-show="ifpopover == itemObj.id">Confirm</span>
                     </a>
@@ -40,7 +52,7 @@
             </tr>
         </tbody>
 
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="objective_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -53,11 +65,11 @@
                         <form>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" value="{{item.name}}" ng-model="item.name" class="form-control" id="short_code" placeholder="Name">
+                                <input type="text" value="{{item.objective_name}}" ng-model="item.objective_name" class="form-control" id="short_code" placeholder="Name">
                             </div>
                             <div class="form-group">
                                 <label>Business Unit Name</label>
-				<select class="form-control" ng-model="item.business_unit">
+				<select class="form-control" ng-model="item.business_unit" value="hellooogihfd">
 				<option  ng-repeat="itemObj in unitList track by $index">{{itemObj.name}}</option>
 				<!--<option>2</option>
 				<option>3</option>
@@ -80,9 +92,9 @@
 
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button ng-click="saveItem();
+                        <button ng-click="saveObjectiveItem();
                             saveLoading = true;" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                        <button ng-click="editRecord($index);
+                        <button ng-click="editObjectiveRecord($index);
                             saveLoading = true;" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
                     </div>
                 </div><!-- /.modal-content -->

@@ -39,7 +39,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 })
                 .state('main.objective', {
                     url: "/objective",
-                    templateUrl: "objective/Objective.html",
+                    templateUrl: "objective/Objective.html?time=" + new Date().getTime(),
                     controller: 'ObjectiveCtrl'
                 })
                 .state('main.logout', {

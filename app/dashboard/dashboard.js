@@ -1,7 +1,7 @@
 'use strict';
 var dashMod = angular.module('MMI.dashboard', ['MMI.ajaxService', 'ngStorage']);
-dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '$q', '$http', '$state',
-    function ($scope, ajaxRequest, $localStorage, $q, $http, $state) {
+dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q',
+    function ($scope, ajaxRequest, $q) {
 
 //        if (!$localStorage.user) {
 //            $state.go('main.login')
@@ -53,7 +53,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                 index: index,
                 status: item.status
             };
-            $('#myModal').modal({backdrop: true})
+            $('#unit_Modal').modal({backdrop: true})
         };
         $scope.list = [];
         $scope.saveItem = function () {
@@ -71,12 +71,12 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                             myobj.org_level = $scope.item.org_level;
                             myobj.status = false;
                             $scope.list.unshift(myobj);
-                            $('#myModal').modal('hide');
+                            $('#unit_Modal').modal('hide');
                         } else {
                             console.log(data.error);
                             alert(result.error);
                             $scope.saveLoading = false;
-                            $('#myModal').modal('hide');
+                            $('#unit_Modal').modal('hide');
                         }
                     });
             promise.catch(
@@ -101,12 +101,12 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$localStorage', '
                             if (result.status == "OK") {
                                 $scope.list.splice($scope.item.index, 1, values);
                                 $scope.saveLoading = false;
-                                $('#myModal').modal('hide');
+                                $('#unit_Modal').modal('hide');
                             } else {
                                 console.log(result.error);
                                 alert(result.error);
                                 $scope.saveLoading = false;
-                                $('#myModal').modal('hide');
+                                $('#unit_Modal').modal('hide');
                             }
                         });
                 promise.catch(

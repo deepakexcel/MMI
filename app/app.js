@@ -7,7 +7,8 @@ var app = angular.module('MMI', [
     'MMI.register',
     'MMI.dashboard',
     'MMI.objective',
-//    'MMI.initiative',
+    'MMI.initiative',
+    'MMI.capabilities',
     'MMI.global',
     'MMI.version'
     
@@ -43,11 +44,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: "objective/objective.html?time=" + new Date().getTime(),
                     controller: 'ObjectiveCtrl'
                 })
-//                .state('main.initiative', {
-//                    url: "/initiative",
-//                    templateUrl: "initiative/initiative.html?time=" + new Date().getTime(),
-//                    controller: 'InitiativeCtrl'
-//                })
+                .state('main.initiative', {
+                    url: "/initiative",
+                    templateUrl: "initiative/initiative.html?time=" + new Date().getTime(),
+                    controller: 'InitiativeCtrl'
+                })
+		.state('main.capabilities', {
+                    url: "/capabilities",
+                    templateUrl: "capabilities/capabilities.html?time=" + new Date().getTime(),
+                    controller: 'CapabilitiesCtrl'
+                })
+                .state('main.start', {
+                    url: "/start",
+                    templateUrl: "statrup/start.html?time=" + new Date().getTime(),
+                    //controller: 'CapabilitiesCtrl'
+                })
                 .state('main.logout', {
                     url: "/dashboard",
                     controller: function ($state, $localStorage) {
@@ -55,5 +66,5 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                         $state.go('main.login');
                     }
                 });
-        $urlRouterProvider.otherwise('/main/dashboard');
+        $urlRouterProvider.otherwise('/main/start');
     }]);

@@ -3,8 +3,8 @@
 var dashMod = angular.module('MMI.objective', ['MMI.ajaxService', 'ngStorage']);
 dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
     function ($scope, ajaxRequest, $q, $timeout) {
-
-        $scope.model_title = 'Add';
+        window.document.title = "Business Objective";
+        $scope.model_title = 'Add Business Objective';
         $scope.objective_list = {};
         $scope.item = {
             objective_name: '',
@@ -13,6 +13,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             status: '',
             unit_name: ''
         };
+        $scope.loading = true;
         var unitList2 = [];
         var unit = ajaxRequest.send('lookups/bu/list');
         //console.log(data1);
@@ -22,30 +23,31 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             console.log(data1);
             unitList2 = data1;
             $scope.unitList = data1;
-            $scope.loading = false;
-        });
+            //$scope.loading = false;
 
-        $scope.loading = true;
-        var ajax = ajaxRequest.send('bo/list');
-        // var ajax = ajaxRequest.sendApi('data/list.json');
-        ajax.then(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                data[i].status = false;
-                for (var j = 0; j < unitList2.length; j++) {
-                    if (data[i].business_unit_id == unitList2[j].id) {
-                        data[i].unit_name = unitList2[j].displayName;
+            var ajax = ajaxRequest.send('bo/list');
+            // var ajax = ajaxRequest.sendApi('data/list.json');
+            ajax.then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    data[i].status = false;
+                    for (var j = 0; j < unitList2.length; j++) {
+                        if (data[i].business_unit_id == unitList2[j].id) {
+                            data[i].unit_name = unitList2[j].displayName;
+                        }
                     }
                 }
-            }
-            $scope.objective_list = data;
-            console.log(data);
-            $scope.loading = false;
+                $scope.objective_list = data;
+                console.log(data);
+                $scope.loading = false;
+            });
         });
+
 
 
         $scope.addItem = function () {
+            $scope.hideAllError();
             $scope.buttonShow = true;
-            $scope.model_title = 'Add';
+            $scope.model_title = 'Add Business Objective';
             $scope.item = {
                 objective_name: '',
                 business_unit: '',
@@ -57,10 +59,11 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
 
 
         $scope.editObjectiveItem = function (item, index) {
+            $scope.hideAllError();
             console.log(item);
             $scope.buttonShow = false;
             console.log('In editItem function - lets log item we have:');
-            $scope.model_title = 'Edit';
+            $scope.model_title = 'Edit Business Objective';
             var unitName;
             for (var i = 0; i < unitList2.length; i++) {
                 if (item.business_unit_id == unitList2[i].id) {
@@ -112,7 +115,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                                 $scope.saveLoading = false;
                                 myobj.id = result.lastid;
                                 myobj.name = $scope.item.objective_name;
-                                myobj.business_unit_id = "110";
+                                myobj.business_unit_id = bussUnit;
                                 myobj.description = $scope.item.description;
                                 myobj.status = false;
                                 myobj.unit_name = $scope.item.business_unit;
@@ -123,6 +126,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                                 //alert(result.error);
                                 $scope.alertmsg = true;
                                 $scope.saveLoading = false;
+                                $scope.hideAlert();
                                 $('#objective_Modal').modal('hide');
                             }
                         });
@@ -130,6 +134,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                         function (e) {
                             console.log(e);
                             $scope.alertmsg = true;
+                            $scope.hideAlert();
                         });
             }
         };
@@ -151,6 +156,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
             } else {
+                $scope.saveLoading = true;
                 for (var i = 0; i < unitList2.length; i++) {
 
                     if (unitList2[i].displayName == $scope.item.business_unit) {
@@ -174,6 +180,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                                 // alert(result.error);
                                 $scope.alertmsg = true;
                                 $scope.saveLoading = false;
+                                $scope.hideAlert();
                                 $('#objective_Modal').modal('hide');
                             }
                         });
@@ -183,6 +190,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                             //alert(e);
                             $scope.alertmsg = true;
                             $scope.saveLoading = false;
+                            $scope.hideAlert();
                         });
             }
         }
@@ -200,15 +208,25 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                             $scope.objective_list.splice(indexs, 1);
                         } else {
                             console.log(result.error);
+                            $('#DelError_Modal').modal('show');
+                            $scope.delErr = result.error;
+                            $scope.deleteLoader = false;
+                            $scope.ifpopover = "";
                             //alert(result.error);
-                            $scope.alertmsg = true;
+                            //$scope.alertmsg = true;
+                            //$scope.hideAlert();
                         }
                     });
             promise.catch(
                     function (e) {
                         console.log(e);
+                        $('#DelError_Modal').modal('show');
+                        $scope.delErr = e;
                         //alert(e);
-                        $scope.alertmsg = true;
+                        //$scope.alertmsg = true;
+                        $scope.deleteLoader = false;
+                        // $scope.hideAlert();
+                        $scope.ifpopover = "";
                     });
         }
         $scope.objective_delPopover = function (item, index) {
@@ -249,7 +267,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 console.log($scope.search);
                 //console.log(objective_list);
                 var url = 'bo/find';
-                var srchVal = {"id": $scope.search};
+                var srchVal = {"name": $scope.search};
                 var promise = ajaxRequest.send(url, srchVal, 'POST');
                 promise.then(
                         function (result) {
@@ -274,6 +292,12 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
         }
 
 
+        $scope.hideAllError = function () {
+            $scope.errorName = "";
+            $scope.nameClose = false;
+            $scope.errorUnitName = "";
+            $scope.selectClose = false;
+        }
         $scope.hideAlert = function () {
             $timeout(function () {
                 $scope.alertmsg = false;

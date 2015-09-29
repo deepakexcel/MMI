@@ -6,8 +6,8 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
 //        if (!$localStorage.user) {
 //            $state.go('main.login')
 //        }
-
-        $scope.model_title = 'Add';
+        window.document.title = "Business Unit";
+        $scope.model_title = 'Add Business Unit';
         $scope.list = {};
         $scope.item = {
             name: '',
@@ -27,8 +27,9 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             $scope.loading = false;
         });
         $scope.addItem = function () {
+            $scope.hideAllError();
             $scope.buttonShow = true;
-            $scope.model_title = 'Add';
+            $scope.model_title = 'Add Business Unit';
             $scope.item = {
                 name: '',
                 short_code: '',
@@ -37,9 +38,10 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             };
         };
         $scope.editItem = function (item, index) {
+            $scope.hideAllError();
             $scope.buttonShow = false;
             console.log('In editItem function - lets log item we have:');
-            $scope.model_title = 'Edit';
+            $scope.model_title = 'Edit Business Unit';
             //Just a question - why do you create a "new" item and not pass the item you got?
             //Problem was caused by you not passing the id, so the API does not know which
             //item to update
@@ -95,6 +97,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                                 console.log(data.error);
                                 $scope.unitAlertMsg = true;
                                 $scope.saveLoading = false;
+                                $scope.hideAlert();
                                 $('#unit_Modal').modal('hide');
                             }
                         });
@@ -102,7 +105,8 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                         function (e) {
                             console.log(e);
                             $scope.unitAlertMsg = true;
-			    $scope.saveLoading = false;
+                            $scope.saveLoading = false;
+                            $scope.hideAlert();
                         });
             }
         };
@@ -142,6 +146,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                                 console.log(result.error);
                                 $scope.unitAlertMsg = true;
                                 $scope.saveLoading = false;
+                                $scope.hideAlert();
                                 $('#unit_Modal').modal('hide');
                             }
                         });
@@ -150,6 +155,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                             console.log(e);
                             $scope.unitAlertMsg = true;
                             $scope.saveLoading = false;
+                            $scope.hideAlert();
                         });
             }
         }
@@ -157,7 +163,7 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
         $scope.deleteItem = function (items, indexs) {
             $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
-            var url = 'buu/delete';
+            var url = 'bu/delete';
             var dataId = {"id": items.id};
             var promise = ajaxRequest.send(url, dataId, 'POST');
             promise.then(
@@ -167,15 +173,23 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                             $scope.list.splice(indexs, 1);
                         } else {
                             console.log(result.error);
-                            $scope.unitAlertMsg = true;
-			    $scope.deleteLoader = false;
+                            $('#DelError_Modal').modal('show');
+                            $scope.delErr = result.error;
+                            //$scope.unitAlertMsg = true;
+                            $scope.deleteLoader = false;
+                            //$scope.hideAlert();
+                            $scope.ifpopover = "";
                         }
                     });
             promise.catch(
                     function (e) {
                         console.log(e);
-                        $scope.unitAlertMsg = true;
-			$scope.deleteLoader = false;
+                        $('#DelError_Modal').modal('show');
+                        $scope.delErr = e;
+                        //$scope.unitAlertMsg = true;
+                        $scope.deleteLoader = false;
+                        //$scope.hideAlert();
+                        $scope.ifpopover = "";
                     });
         }
         $scope.delPopover = function (item, index) {
@@ -203,10 +217,19 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             $scope.ifpopover = "";
         }
 
+        $scope.hideAllError = function () {
+            $scope.errorShortCode = "";
+            $scope.shortCodeClose = false;
+            $scope.errorUnitName = "";
+            $scope.unitNameClose = false;
+            $scope.errorOrgLevel = "";
+            $scope.orgClose = false;
+        }
+
         $scope.hideAlertUnit = function () {
             $timeout(function () {
                 $scope.unitAlertMsg = false;
-            }, 100000);
+            }, 10000);
         }
         $scope.errorHideShort = function () {
             $scope.errorShortCode = "";

@@ -175,7 +175,7 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 }
                 var url = 'bi/update';
                 //Id needs to be included to the API call:
-                var val = {"id": $scope.item.id, "parent_initiative_id": parent_id, "description": $scope.item.description, "name": $scope.item.initiative_name, "parent_name": $scope.item.parent_initiative};
+                var val = {"id": $scope.item.id, "parent_initiative_id": parent_id, "description": $scope.item.description, "name": $scope.item.initiative_name, "parent_name": $scope.item.parent_initiative, "status": false};
                 var values = {"id": $scope.item.id, "parent_initiative_id": parent_id, "name": $scope.item.initiative_name, "description": $scope.item.description};
                 console.log("Going to send update. Values listed below:");
                 var promise = ajaxRequest.send(url, values, 'POST');

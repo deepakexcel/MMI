@@ -72,13 +72,7 @@
                             <input type="text" value="{{item.capabilities_name}}" ng-model="item.capabilities_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
                         </div>
-                        <div class="form-group {{errorUnitName}}">
-                            <label>Business Unit Name</label>
-                            <select class="form-control" ng-model="item.business_unit" value="{{item.business_unit}}" ng-focus="errorHideSelect()">
-                                <option  ng-repeat="itemCap in unitList track by $index">{{itemCap.id}}</option></select>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
-                        </div>
-
+                      
                         <div class="form-group">
                             <label>Description</label>
                             <input type="text" value="{{item.description}}" ng-model="item.description" class="form-control" id="desc" placeholder="Description">

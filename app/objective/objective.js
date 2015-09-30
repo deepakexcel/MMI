@@ -165,7 +165,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 }
                 var url = 'bo/update';
                 //Id needs to be included to the API call:
-                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name, "unit_name": $scope.item.business_unit};
+                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name, "unit_name": $scope.item.business_unit, "status": false};
                 var values = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
                 console.log("Going to send update. Values listed below:");
                 var promise = ajaxRequest.send(url, values, 'POST');

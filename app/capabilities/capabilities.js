@@ -9,25 +9,13 @@ dashMod.controller('CapabilitiesCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout
         $scope.item = {
             capabilities_name: '',
             description: '',
-            business_unit: '',
             status: ''
 
         };
 
         $scope.loading = true;
 
-        var unitList2 = [];
-        var unit = ajaxRequest.send('lookups/bu/list');
-        //console.log(data1);
-        // var ajax = ajaxRequest.sendApi('data/list.json');
-        unit.then(function (data1) {
-            //console.log(unit);
-            console.log(data1);
-            unitList2 = data1;
-            $scope.unitList = data1;
-            //$scope.loading = false;
 
-        });
         var ajax = ajaxRequest.send('bc/list');
         // var ajax = ajaxRequest.sendApi('data/list.json');
         ajax.then(function (data) {
@@ -47,7 +35,6 @@ dashMod.controller('CapabilitiesCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout
             $scope.item = {
                 capabilities_name: '',
                 description: '',
-                business_unit: '',
                 status: ''
             };
         };
@@ -72,18 +59,9 @@ dashMod.controller('CapabilitiesCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout
 
         $scope.capabilities_list = [];
         $scope.saveCapabilitiesItem = function () {
-
-            if (!$scope.item.capabilities_name && !$scope.item.business_unit) {
+            if (!$scope.item.capabilities_name) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
-            } else if (!$scope.item.capabilities_name) {
-                $scope.errorName = "has-error has-feedback";
-                $scope.nameClose = true;
-            } else if (!$scope.item.business_unit) {
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
 
             } else {
                 $scope.saveLoading = true;
@@ -125,29 +103,22 @@ dashMod.controller('CapabilitiesCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout
 
         $scope.editCapabilitiesRecord = function (indexx) {
             console.log($scope.item);
-            if (!$scope.item.capabilities_name && !$scope.item.business_unit) {
+            if (!$scope.item.capabilities_name) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
-            } else if (!$scope.item.capabilities_name) {
-                $scope.errorName = "has-error has-feedback";
-                $scope.nameClose = true;
-            } else if (!$scope.item.business_unit) {
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
             } else {
                 $scope.saveLoading = true;
+
                 var url = 'bc/update';
                 //Id needs to be included to the API call:
-//                var val = {"id": $scope.item.id, "name": $scope.item.capabilities_name, "description": $scope.item.description};
-                var values = {"id": $scope.item.id, "business_unit_id": $scope.item.business_unit, "name": $scope.item.capabilities_name, "description": $scope.item.description};
+                var val = {"id": $scope.item.id, "name": $scope.item.capabilities_name, "description": $scope.item.description, "status": false};
+                var values = {"id": $scope.item.id, "name": $scope.item.capabilities_name, "description": $scope.item.description};
                 console.log("Going to send update. Values listed below:");
                 var promise = ajaxRequest.send(url, values, 'POST');
                 promise.then(
                         function (result) {
                             if (result.status == "OK") {
-                                $scope.capabilities_list.splice($scope.item.index, 1, values);
+                                $scope.capabilities_list.splice($scope.item.index, 1, val);
                                 $scope.saveLoading = false;
                                 $('#capabilities_Modal').modal('hide');
                             } else {
@@ -266,13 +237,10 @@ dashMod.controller('CapabilitiesCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout
                         });
             }
         }
-
-
         $scope.hideAllError = function () {
             $scope.errorName = "";
             $scope.nameClose = false;
-            $scope.errorUnitName = "";
-            $scope.selectClose = false;
+            
         }
         $scope.hideAlert = function () {
             $timeout(function () {
@@ -283,10 +251,7 @@ dashMod.controller('CapabilitiesCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout
             $scope.errorName = "";
             $scope.nameClose = false;
         }
-        $scope.errorHideSelect = function () {
-            $scope.errorUnitName = "";
-            $scope.selectClose = false;
-        }
+        
         $scope.findError = function () {
             $scope.errorFind = "";
             $scope.findClose = false;

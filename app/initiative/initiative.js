@@ -1,43 +1,42 @@
 
 'use strict';
-var dashMod = angular.module('MMI.initiative', ['MMI.ajaxService', 'ngStorage']);
-dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
+var dashMod = angular.module('MMI.objective', ['MMI.ajaxService', 'ngStorage']);
+dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
     function ($scope, ajaxRequest, $q, $timeout) {
-        window.document.title = "Business Initiative";
-        $scope.model_title = 'Add Business Initiative';
-        $scope.initiative_list = {};
+        window.document.title = "Business Objective";
+        $scope.model_title = 'Add Business Objective';
+        $scope.objective_list = {};
         $scope.item = {
-            initiative_name: '',
-            parent_initiative: '',
+            objective_name: '',
+            business_unit: '',
             description: '',
             status: '',
-            parent_name: ''
+            unit_name: ''
         };
-
         $scope.loading = true;
-        var parentList2 = [];
-        var parent = ajaxRequest.send('lookups/bi/parentlist');
+        var unitList2 = [];
+        var unit = ajaxRequest.send('lookups/bu/list');
         //console.log(data1);
         // var ajax = ajaxRequest.sendApi('data/list.json');
-        parent.then(function (data1) {
+        unit.then(function (data1) {
             //console.log(unit);
             console.log(data1);
-            parentList2 = data1;
-            $scope.parentList = data1;
-            $scope.loading = false;
+            unitList2 = data1;
+            $scope.unitList = data1;
+            //$scope.loading = false;
 
-            var ajax = ajaxRequest.send('bi/list');
+            var ajax = ajaxRequest.send('bo/list');
             // var ajax = ajaxRequest.sendApi('data/list.json');
             ajax.then(function (data) {
                 for (var i = 0; i < data.length; i++) {
                     data[i].status = false;
-                    for (var j = 0; j < parentList2.length; j++) {
-                        if (data[i].parent_initiative_id == parentList2[j].initiativeId) {
-                            data[i].parent_name = parentList2[j].initiativeName;
+                    for (var j = 0; j < unitList2.length; j++) {
+                        if (data[i].business_unit_id == unitList2[j].id) {
+                            data[i].unit_name = unitList2[j].displayName;
                         }
                     }
                 }
-                $scope.initiative_list = data;
+                $scope.objective_list = data;
                 console.log(data);
                 $scope.loading = false;
             });
@@ -45,153 +44,144 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
 
 
 
-
-
-
-        $scope.addInitiativeItem = function () {
+        $scope.addItem = function () {
             $scope.hideAllError();
             $scope.buttonShow = true;
-            $scope.model_title = 'Add Business Initiative';
+            $scope.model_title = 'Add Business Objective';
             $scope.item = {
-                initiative_name: '',
-                parent_initiative: '',
+                objective_name: '',
+                business_unit: '',
                 description: '',
                 status: '',
-                parent_name: ''
+                unit_name: ''
             };
         };
 
 
-        $scope.editInitiativeItem = function (item, index) {
+        $scope.editObjectiveItem = function (item, index) {
             $scope.hideAllError();
             console.log(item);
             $scope.buttonShow = false;
             console.log('In editItem function - lets log item we have:');
-            $scope.model_title = 'Edit Business Initiative';
+            $scope.model_title = 'Edit Business Objective';
             var unitName;
-            for (var i = 0; i < parentList2.length; i++) {
-                if (item.parent_initiative_id == parentList2[i].id) {
-                    unitName = parentList2[i].initiativeName;
+            for (var i = 0; i < unitList2.length; i++) {
+                if (item.business_unit_id == unitList2[i].id) {
+                    unitName = unitList2[i].displayName;
                 }
             }
             $scope.item = {
                 id: item.id,
-                initiative_name: item.name,
-                parent_initiative: item.parent_name,
+                objective_name: item.name,
+                business_unit: item.unit_name,
                 description: item.description,
                 index: index,
                 status: item.status,
-                parent_name: item.parent_name
+                unit_name: item.unit_name
 
             };
-            $('#initiative_Modal').modal({backdrop: true})
+            $('#objective_Modal').modal({backdrop: true})
         };
 
-        $scope.initiative_list = [];
-        $scope.saveInitiativeItem = function () {
+        $scope.objective_list = [];
+        $scope.saveObjectiveItem = function () {
 
-            if (!$scope.item.initiative_name && !$scope.item.parent_initiative) {
+            if (!$scope.item.objective_name && !$scope.item.business_unit) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
-            } else if (!$scope.item.initiative_name) {
+            } else if (!$scope.item.objective_name) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
-            } else if (!$scope.item.parent_initiative) {
+            } else if (!$scope.item.business_unit) {
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
             } else {
                 $scope.saveLoading = true;
-                var parent_id = 0;
-                for (var i = 0; i < parentList2.length; i++) {
-                    if (parentList2[i].initiativeName == $scope.item.parent_initiative) {
-                        parent_id = parentList2[i].initiativeId
+                var bussUnit = 0;
+                for (var i = 0; i < unitList2.length; i++) {
+                    if (unitList2[i].displayName == $scope.item.business_unit) {
+                        bussUnit = unitList2[i].id
                     }
                 }
-
-                console.log("parent_id :- " + parent_id);
-                console.log("parent_Name :- " + $scope.item.initiative_name);
-                console.log("parent_desc:- " + $scope.item.description);
-                console.log("parent_parent_initiative:- " + $scope.item.parent_initiative);
                 var myobj = {};
-                var url = 'bi/add';
-                var values = {"name": $scope.item.initiative_name, "parent_initiative_id": parent_id, "description": $scope.item.description};
+                var url = 'bo/add';
+                var values = {"business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
                 var promise = ajaxRequest.send(url, values, 'POST');
                 promise.then(
                         function (result) {
                             if (result.status == "OK") {
                                 $scope.saveLoading = false;
                                 myobj.id = result.lastid;
-                                myobj.name = $scope.item.initiative_name;
-                                myobj.parent_initiative_id = parent_id;
+                                myobj.name = $scope.item.objective_name;
+                                myobj.business_unit_id = bussUnit;
                                 myobj.description = $scope.item.description;
                                 myobj.status = false;
-                                myobj.parent_name = $scope.item.parent_initiative;
-                                $scope.initiative_list.unshift(myobj);
-                                $('#initiative_Modal').modal('hide');
+                                myobj.unit_name = $scope.item.business_unit;
+                                $scope.objective_list.unshift(myobj);
+                                $('#objective_Modal').modal('hide');
                             } else {
                                 console.log(data.error);
                                 //alert(result.error);
                                 $scope.alertmsg = true;
                                 $scope.saveLoading = false;
                                 $scope.hideAlert();
-                                $('#initiative_Modal').modal('hide');
+                                $('#objective_Modal').modal('hide');
                             }
                         });
                 promise.catch(
                         function (e) {
                             console.log(e);
                             $scope.alertmsg = true;
-                            $scope.saveLoading = false;
                             $scope.hideAlert();
                         });
             }
         };
         $scope.page = function () {
         };
-        $scope.editInitiativeRecord = function (indexx) {
-            var parent_id = 0;
-            if (!$scope.item.initiative_name && !$scope.item.parent_initiative) {
+        $scope.editObjectiveRecord = function (indexx) {
+            var bussUnit = 0;
+            if (!$scope.item.objective_name && !$scope.item.business_unit) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
                 $scope.saveLoading = false;
                 //alert("pls must fill all the field");
-            } else if (!$scope.item.initiative_name) {
+            } else if (!$scope.item.objective_name) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
-            } else if (!$scope.item.parent_initiative) {
+            } else if (!$scope.item.business_unit) {
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
             } else {
                 $scope.saveLoading = true;
-                for (var i = 0; i < parentList2.length; i++) {
+                for (var i = 0; i < unitList2.length; i++) {
 
-                    if (parentList2[i].initiativeName == $scope.item.parent_initiative) {
-                        parent_id = parentList2[i].initiativeId;
+                    if (unitList2[i].displayName == $scope.item.business_unit) {
+                        bussUnit = unitList2[i].id;
                     }
                 }
-                var url = 'bi/update';
+                var url = 'bo/update';
                 //Id needs to be included to the API call:
-                var val = {"id": $scope.item.id, "parent_initiative_id": parent_id, "description": $scope.item.description, "name": $scope.item.initiative_name, "parent_name": $scope.item.parent_initiative, "status": false};
-                var values = {"id": $scope.item.id, "parent_initiative_id": parent_id, "name": $scope.item.initiative_name, "description": $scope.item.description};
+                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name, "unit_name": $scope.item.business_unit, "status": false};
+                var values = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
                 console.log("Going to send update. Values listed below:");
                 var promise = ajaxRequest.send(url, values, 'POST');
                 promise.then(
                         function (result) {
                             if (result.status == "OK") {
-                                $scope.initiative_list.splice($scope.item.index, 1, val);
+                                $scope.objective_list.splice($scope.item.index, 1, val);
                                 $scope.saveLoading = false;
-                                $('#initiative_Modal').modal('hide');
+                                $('#objective_Modal').modal('hide');
                             } else {
                                 console.log(result.error);
                                 // alert(result.error);
                                 $scope.alertmsg = true;
                                 $scope.saveLoading = false;
                                 $scope.hideAlert();
-                                $('#initiative_Modal').modal('hide');
+                                $('#objective_Modal').modal('hide');
                             }
                         });
                 promise.catch(
@@ -205,41 +195,41 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             }
         }
 
-        $scope.deleteInitiativeItem = function (items, indexs) {
-            console.log(items);
+        $scope.deleteObjectiveItem = function (items, indexs) {
             $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
-            var url = 'bi/delete';
+            var url = 'bo/delete';
             var dataId = {"id": items.id};
             var promise = ajaxRequest.send(url, dataId, 'POST');
             promise.then(
                     function (result) {
                         $scope.deleteLoader = false;
                         if (result.status == "OK") {
-                            $scope.initiative_list.splice(indexs, 1);
+                            $scope.objective_list.splice(indexs, 1);
                         } else {
                             console.log(result.error);
                             $('#DelError_Modal').modal('show');
                             $scope.delErr = result.error;
+                            $scope.deleteLoader = false;
+                            $scope.ifpopover = "";
                             //alert(result.error);
                             //$scope.alertmsg = true;
                             //$scope.hideAlert();
-                            $scope.ifpopover = "";
                         }
                     });
             promise.catch(
                     function (e) {
                         console.log(e);
-                        //alert(e);
                         $('#DelError_Modal').modal('show');
                         $scope.delErr = e;
+                        //alert(e);
                         //$scope.alertmsg = true;
                         $scope.deleteLoader = false;
-                        //$scope.hideAlert();
+                        // $scope.hideAlert();
                         $scope.ifpopover = "";
                     });
         }
-        $scope.initiative_delPopover = function (item, index) {
+        $scope.objective_delPopover = function (item, index) {
             var elem = angular.element(document.getElementById(index));
             if (item.status == false) {
                 item.status = true;
@@ -252,7 +242,7 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 console.log("else");
                 elem.popover('hide');
                 item.status = false;
-                $scope.deleteInitiativeItem(item, index);
+                $scope.deleteObjectiveItem(item, index);
             }
         }
 
@@ -264,7 +254,7 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             $scope.ifpopover = "";
         }
 
-        $scope.findInitiativeRecord = function () {
+        $scope.findObjectiveRecord = function () {
             $scope.errorFind = "";
             if (!$scope.search) {
                 $scope.errorFind = "has-error has-feedback";
@@ -275,8 +265,8 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 }, 5000);
             } else {
                 console.log($scope.search);
-                //console.log(initiative_list);
-                var url = 'bi/find';
+                //console.log(objective_list);
+                var url = 'bo/find';
                 var srchVal = {"name": $scope.search};
                 var promise = ajaxRequest.send(url, srchVal, 'POST');
                 promise.then(
@@ -300,6 +290,7 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                         });
             }
         }
+
 
         $scope.hideAllError = function () {
             $scope.errorName = "";

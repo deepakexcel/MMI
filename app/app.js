@@ -10,8 +10,9 @@ var app = angular.module('MMI', [
     'MMI.initiative',
     'MMI.capabilities',
     'MMI.global',
-    'MMI.version'
-    
+    'MMI.version',
+    'MMI.start',
+    'MMI.graph'
 ]);
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -54,10 +55,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: "capabilities/capabilities.html?time=" + new Date().getTime(),
                     controller: 'CapabilitiesCtrl'
                 })
+                .state('main.graph', {
+                    url: "/graph/:graph",
+                    templateUrl: "graph/graph.html?time=" + new Date().getTime(),
+                    controller: 'graphCtrl'
+                })
                 .state('main.start', {
                     url: "/start",
                     templateUrl: "statrup/start.html?time=" + new Date().getTime(),
-                    //controller: 'CapabilitiesCtrl'
+                 controller: 'StartCtrl'
                 })
                 .state('main.logout', {
                     url: "/dashboard",

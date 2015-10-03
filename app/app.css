@@ -30,6 +30,10 @@
     /* Hides inner circles outside base circle at safari */
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 }
+
+.loadingSpinner {
+    margin: 0px auto;
+}
 .inner-circles-loader:not(:required):before, .inner-circles-loader:not(:required):after {
     content: '';
     position: absolute;

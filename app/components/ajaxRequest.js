@@ -1,4 +1,5 @@
 'use strict';
+
 var ajaxService = angular.module('MMI.ajaxService', []);
 ajaxService.factory('ajaxRequest',
         ['$http', '$q', '$log',
@@ -46,13 +47,21 @@ ajaxService.factory('ajaxRequest',
                             timeout: 60000
                         });
                         http.success(function (data) {
+				console.log(data);
+				
                             def.resolve(data);
+				return data;
+				
                         });
                         http.error(function (data) {
+				console.log(data);
+				
                             def.reject(data);
+				return data;
                         });
                         return def.promise;
                     }
                 };
             }
         ]);
+

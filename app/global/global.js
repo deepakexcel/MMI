@@ -16,5 +16,8 @@ globalMod.controller('GlobalCtrl', ['$scope', 'ajaxRequest', '$state', '$localSt
                 function () {
                     $scope.checkUser();
                 });
+	$scope.goBobjective = function(){
+		$state.go("main.objective");
+	}
 
     }]);

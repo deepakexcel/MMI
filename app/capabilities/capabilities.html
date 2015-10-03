@@ -44,7 +44,7 @@
             <td style="width: 25%;">
                 <button ng-click="editCapabilitiesItem(itemCap, $index);
                             saveLoading = false;" type="button" class="btn btn-info">Edit</button>
-                <span tabindex="0" style="width:70px;"  class="btn btn-danger" ng-click="capabilities_delPopover(itemCap, $index);" ng-blur="hidePopove(itemCap, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemCap, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
+                <span ng-class='{"btn-success":ifpopover == itemCap.id,"btn-danger":ifpopover != itemCap.id}' tabindex="0" style="width:70px;"  class="btn btn-danger" ng-click="capabilities_delPopover(itemCap, $index);" ng-blur="hidePopove(itemCap, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemCap, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
                       data-content="Are you sure you want to delete business unit {{itemCap.name}}?" data-html="true"  data-placement="top">
                     <span  ng-hide="ifpopover == itemCap.id" >Delete</span>
                     <span  ng-show="ifpopover == itemCap.id">Confirm</span>

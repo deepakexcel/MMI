@@ -15,18 +15,28 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dependency explorer <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                        <li><a ui-sref="main.graph({graph:'Objectives'})" >Objectives</a></li>
+                        <li><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <!--<li><a  ng-if='!is_login' ui-sref="main.login">Login</a></li>
                         <li><a  ng-if='!is_login' ui-sref="main.register">Regsiter</a></li>
                         <li><a ng-if='is_login' ui-sref="main.logout">Logout</a></li>-->
-			<li><a ui-sref="main.dashboard">Business Unit</a></li>
-			<li><a ui-sref="main.objective">Business Objective</a></li>
-			<li><a ui-sref="main.initiative">Business Initiative</a></li>
-			<li><a ui-sref="main.capabilities">Business Capabilities</a></li>
-			
+                        <li><a ui-sref="main.dashboard">Business Unit</a></li>
+                        <li><a ui-sref="main.objective">Business Objective</a></li>
+                        <li><a ui-sref="main.initiative">Business Initiative</a></li>
+                        <li><a ui-sref="main.capabilities">Business Capabilities</a></li>
+
                     </ul>
                 </li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

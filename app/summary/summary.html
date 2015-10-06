@@ -1,0 +1,136 @@
+<div style="padding-left: 35px;" >
+
+    <div class="row marginZero">
+        <div style="padding: 0px" class="col-xs-6 col-sm-4">
+            <div class="row marginZero" style="padding-bottom: 15px;">
+                <select ng-change="summaryfire(item.business_unitSummary)" class="form-control" style="width: 100%; height: 30px;" ng-model="item.business_unitSummary">
+                    <option  ng-repeat="itemObj in unitList track by $index">{{itemObj.displayName}}</option>
+                </select>
+            </div>
+            <div class="row marginZero">
+
+                <div class="widget"  style="text-align: center; width: 100%;">
+                    <div class="widget-body">
+                        <div class="widget-icon red pull-left">
+                            <i class="fa fa-tasks"></i>
+                        </div>
+                        <div class="title" style="font-size: 17px;">{{unitSummary.summary.totalObjectives}}</div>
+                        <div class="comment" style="font-size: 17px;">Objectives</div>
+                        <div >
+                            <button class="btn btn-primary btn-sm" ng-click="exploreObjectives()">Explore</button>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+            <div class="row marginZero" style="margin: 0px;">
+
+                <div class="widget" style="text-align: center; width: 100%;">
+                    <div class="widget-body">
+                        <div class="widget-icon green pull-left">
+                            <i class="fa fa-cubes"></i>
+                        </div>
+                        <div class="title" style="font-size: 17px;">{{unitSummary.summary.NEEDSCapabilities}}</div>
+                        <div class="comment" style="font-size: 17px;">NEEDS Capabilities</div>
+                        <div>
+                            <button class="btn btn-primary btn-sm" ng-click="explore()">Explore</button>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+            <div class="row marginZero">
+
+                <div class="widget"  style="text-align: center; width: 100%;">
+                    <div class="widget-body">
+                        <div class="widget-icon red pull-left">
+                            <i class="glyphicon glyphicon-xbt"></i>
+                        </div>
+                        <div class="title" style="font-size: 17px;">{{unitSummary.summary.HASCapabilities}}</div>
+                        <div class="comment" style="font-size: 17px;">HAS Capabilities</div>
+                        <div >
+                            <button class="btn btn-primary btn-sm" ng-click="explore()">Explore</button>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+            <div class="row marginZero" style="margin: 0px;">
+
+                <div class="widget" style="text-align: center; width: 100%;">
+                    <div class="widget-body">
+                        <div class="widget-icon green pull-left">
+                            <i class="fa fa-building"></i>
+                        </div>
+                        <div class="title" style="font-size: 17px;">{{unitSummary.summary.totalInitiatives}}</div>
+                        <div class="comment" style="font-size: 17px;">Initiatives</div>
+                        <div>
+                            <button class="btn btn-primary btn-sm" ng-click="explore()">Explore</button>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="col-xs-8 col-lg-8">
+            <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
+                <div class="widget">
+                    <div class="widget-header">
+                        <h4><span class="menu-icon fa fa-sun-o"></span> Recent Transaction</h4>
+                    </div>
+                    <div class="widget-body medium no-padding">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th>Date</th>
+                                        <th>User</th>
+                                        <th>Transaction</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="text-align: center">
+                                        <td colspan="3" ng-show="loading">
+                                            <div class="inner-circles-loader">
+                                                Loading…
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    <tr ng-repeat="recentItem in recentTrace track by $index" ng-show="!loading">
+                                        <td>{{recentItem.tracedate}}</td>
+                                        <td>{{recentItem.username}}</td>
+                                        <td>{{recentItem.metainfo}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>      
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--Delete Error Modal -->
+    <div class="modal fade bs-example-modal-sm" id="DelError_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Error...</h4>
+                </div>
+                <div class="modal-body">
+                    <div>Comming Soon...</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>

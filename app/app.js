@@ -9,6 +9,8 @@ var app = angular.module('MMI', [
     'MMI.objective',
     'MMI.initiative',
     'MMI.capabilities',
+    'MMI.summary',
+    'MMI.objectiveGrid',
     'MMI.global',
     'MMI.version',
     'MMI.start',
@@ -55,6 +57,19 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: "capabilities/capabilities.html?time=" + new Date().getTime(),
                     controller: 'CapabilitiesCtrl'
                 })
+                
+                .state('main.summary', {
+                    url: "/summary",
+                    templateUrl: "summary/summary.html?time=" + new Date().getTime(),
+                    controller: 'SummaryCtrl'
+                })
+                
+                .state('main.objectiveGrid', {
+                    url: "/objectiveGrid/:a",
+                    templateUrl: "gridExplorer/objectiveGrid.html?time=" + new Date().getTime(),
+                    controller: 'ObjectiveGridCtrl'
+                })
+                
                 .state('main.graph', {
                     url: "/graph/:graph",
                     templateUrl: "graph/graph.html?time=" + new Date().getTime(),

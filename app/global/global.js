@@ -7,7 +7,7 @@ globalMod.controller('GlobalCtrl', ['$scope', 'ajaxRequest', '$state', '$localSt
             if ($localStorage.user) {
                 console.log('user logged in');
                 $scope.is_login = true;
-            }else{
+            } else {
                 console.log('user not logged in');
             }
         };
@@ -16,8 +16,36 @@ globalMod.controller('GlobalCtrl', ['$scope', 'ajaxRequest', '$state', '$localSt
                 function () {
                     $scope.checkUser();
                 });
-	$scope.goBobjective = function(){
-		$state.go("main.objective");
-	}
+        $scope.goBobjective = function () {
+            $state.go("main.objective");
+        }
+
+        var mobileView = 992;
+
+        $scope.getWidth = function () {
+            return window.innerWidth;
+        };
+
+        $scope.$watch($scope.getWidth, function (newValue, oldValue) {
+            if (newValue >= mobileView) {
+                if (angular.isDefined($cookieStore.get('toggle'))) {
+                    $scope.toggle = !$cookieStore.get('toggle') ? false : true;
+                } else {
+                    $scope.toggle = true;
+                }
+            } else {
+                $scope.toggle = false;
+            }
+
+        });
+
+        $scope.toggleSidebar = function () {
+            $scope.toggle = !$scope.toggle;
+//            $cookieStore.put('toggle', $scope.toggle);
+        };
+
+        window.onresize = function () {
+            $scope.$apply();
+        };
 
     }]);

@@ -1,123 +1,136 @@
-<div style="padding: 0px">
-    <button ng-click="addItem();
+<div style="padding: 10px">
+    <div>
+        <button ng-click="addItem();
                 saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        Add
-    </button>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add
+        </button>
 
-    <div class="col-lg-12" style="padding: 5px 0 15px 0;">
-        <h4 style="float: left;">Business Objective List</h4>
-        <div class="input-group {{errorFind}}">
-            <input type="text" class="form-control" ng-model="search" placeholder="Search for..." style="width: 40%; float: right;" ng-focus="findError()" aria-describedby="inputError2Status">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="findClose"></span>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="findObjectiveRecord()">Go!</button>
-            </span>
-        </div><!-- /input-group -->
-    </div><!-- /.col-lg-12 -->
-</div><!-- /.row -->
+        <div class="col-lg-12" style="padding: 5px 0 15px 0;">
 
-<div class="alert alert-danger alert-dismissible" role="alert" style="margin: 10px 0px 10px 0px; clear: both;" ng-show="alertmsg">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Error!</strong> Better check yourself, you're not looking too good.
+        </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+
+    <div class="alert alert-danger alert-dismissible" role="alert" style="margin: 10px 0px 10px 0px; clear: both;" ng-show="alertmsg">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Error!</strong> Better check yourself, you're not looking too good.
+    </div>
+    <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
+        <div class="widget">
+            <div class="widget-header">
+                <h4 style="float: left;"><span class="menu-icon glyphicon glyphicon-usd"></span> Business Objective List</h4>
+                <div class="input-group {{errorFind}}">
+                    <input type="text" class="form-control" ng-model="search" placeholder="Search for..." style="width: 40%; float: right;" ng-focus="findError()" aria-describedby="inputError2Status">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="findClose"></span>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="findObjectiveRecord()">Go!</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+            <div class="widget-body large no-padding">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Business Unit Name</th>
+                                <th>Description</th>
+                                <th style="min-width: 150px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="text-align: center">
+                                <td colspan="4" ng-show="loading">
+                                    <div class="inner-circles-loader">
+                                        Loading…
+                                    </div>
+                                </td> 
+                            </tr>
+                            <tr ng-repeat="itemObj in objective_list track by $index" ng-show="!loading">
+                                <td>{{itemObj.name}}</td>
+                                <td>{{itemObj.unit_name}}</td>
+                                <td>{{itemObj.description}}</td>
+                                <td>
+                                    <button ng-click="editObjectiveItem(itemObj, $index);
+                                            saveLoading = false;" type="button" class="btn btn-info">Edit</button>
+                                    <a tabindex="0" style="width:70px;" ng-class='{"btn-success":ifpopover == itemObj.id,"btn-danger":ifpopover != itemObj.id}'  class="btn btn-danger" ng-click="objective_delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
+                                       data-content="Are you sure you want to delete business unit {{itemObj.objective_name}}?" data-html="true"  data-placement="top">
+                                        <span  ng-hide="ifpopover == itemObj.id" >Delete</span>
+                                        <span  ng-show="ifpopover == itemObj.id">Confirm</span>
+                                    </a>
+                                    <div class="three-quarters-loader" ng-show="deleteLoader == itemObj.id" style="margin: 7px 0 0px 7px; position: absolute;">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <div class="modal fade" id="objective_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">{{model_title}}</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+
+                                        <form>
+
+                                            <div class="form-group {{errorName}}">
+                                                <label>Name</label>
+                                                <input type="text" value="{{item.objective_name}}" ng-model="item.objective_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
+                                            </div>
+                                            <div class="form-group {{errorUnitName}}">
+                                                <label>Business Unit Name</label>
+                                                <select class="form-control" ng-model="item.business_unit" value="hellooogihfd" ng-focus="errorHideSelect()">
+                                                    <option  ng-repeat="itemObj in unitList track by $index">{{itemObj.displayName}}</option></select>
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <input type="text" value="{{item.description}}" ng-model="item.description" class="form-control" id="desc" placeholder="Description">
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;">
+
+                                        </div>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button ng-click="saveObjectiveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
+                                        <button ng-click="editObjectiveRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+
+                        <!--Delete Error Modal -->
+                        <div class="modal fade bs-example-modal-sm" id="DelError_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Error...</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>{{delErr}}</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<table class="table table-bordered table-hover table-striped">
-    <thead>
-        <tr>
-
-            <th>Name</th>
-            <th>Business Unit Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr style="text-align: center">
-            <td colspan="4" ng-show="loading">
-                <div class="inner-circles-loader">
-                    Loading…
-                </div>
-            </td> 
-        </tr>
-        <tr ng-repeat="itemObj in objective_list track by $index" ng-show="!loading">
-            <td>{{itemObj.name}}</td>
-            <td>{{itemObj.unit_name}}</td>
-            <td>{{itemObj.description}}</td>
-            <td>
-                <button ng-click="editObjectiveItem(itemObj, $index);
-                            saveLoading = false;" type="button" class="btn btn-info">Edit</button>
-                <a tabindex="0" style="width:70px;" ng-class='{"btn-success":ifpopover == itemObj.id,"btn-danger":ifpopover != itemObj.id}'  class="btn btn-danger" ng-click="objective_delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
-                   data-content="Are you sure you want to delete business unit {{itemObj.objective_name}}?" data-html="true"  data-placement="top">
-                    <span  ng-hide="ifpopover == itemObj.id" >Delete</span>
-                    <span  ng-show="ifpopover == itemObj.id">Confirm</span>
-                </a>
-                <div class="three-quarters-loader" ng-show="deleteLoader == itemObj.id" style="margin: 7px 0 0px 7px; position: absolute;">
-                </div>
-            </td>
-        </tr>
-    </tbody>
-
-    <div class="modal fade" id="objective_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{model_title}}</h4>
-                </div>
-                <div class="modal-body">
-
-
-                    <form>
-
-                        <div class="form-group {{errorName}}">
-                            <label>Name</label>
-                            <input type="text" value="{{item.objective_name}}" ng-model="item.objective_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
-                        </div>
-                        <div class="form-group {{errorUnitName}}">
-                            <label>Business Unit Name</label>
-                            <select class="form-control" ng-model="item.business_unit" value="hellooogihfd" ng-focus="errorHideSelect()">
-                                <option  ng-repeat="itemObj in unitList track by $index">{{itemObj.displayName}}</option></select>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input type="text" value="{{item.description}}" ng-model="item.description" class="form-control" id="desc" placeholder="Description">
-                        </div>
-                    </form>
-
-
-                </div>
-                <div class="modal-footer">
-                    <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;">
-
-                    </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button ng-click="saveObjectiveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                    <button ng-click="editObjectiveRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
-    <!--Delete Error Modal -->
-    <div class="modal fade bs-example-modal-sm" id="DelError_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Error...</h4>
-                </div>
-                <div class="modal-body">
-                    <div>{{delErr}}</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-</table>

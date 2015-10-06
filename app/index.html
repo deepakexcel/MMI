@@ -13,27 +13,17 @@
         <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="app.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/rdash-ui/dist/css/rdash.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/rdash-ui/dist/css/rdash.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="css/chord.css">
         <link rel="stylesheet" type="text/css" href="css/demo.css">
         <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    </head>
-    <body class="body">
 
-        <div ui-view></div>
-        <!--
-        <footer class="footer">
-            <div class="container">
-                <p class="text-muted">Angular seed app: v<span app-version></span></p>
-            </div>
-        </footer>
-        -->
-
-        <!-- In production use:
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-        -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="components/d3.js" type="text/javascript"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -46,6 +36,8 @@
         <script src="objective/objective.js" type="text/javascript"></script>
         <script src="initiative/initiative.js" type="text/javascript"></script>
         <script src="capabilities/capabilities.js" type="text/javascript"></script>
+        <script src="summary/summary.js" type="text/javascript"></script>
+        <script src="gridExplorer/objectiveGrid.js" type="text/javascript"></script>
         <script src='global/global.js'></script>
         <script src="app.js"></script>
         <script src="statrup/StartCtrl.js"></script> 
@@ -53,7 +45,10 @@
         <script src="components/version/version.js"></script>
         <script src="components/version/version-directive.js"></script>
         <script src="components/version/interpolate-filter.js"></script>
+    </head>
+    <body class="">
 
+        <div ui-view></div>
     </body>
 
 </html>

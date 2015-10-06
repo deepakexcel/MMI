@@ -1,45 +1,116 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><img src="global/favicons.png"/></a>
+
+<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar">
+            <li class="sidebar-main">
+                <a ng-click="toggleSidebar()">
+                    Dashboard
+                    <span class="menu-icon glyphicon glyphicon-transfer"></span>
+                </a>
+            </li>
+            <li class="sidebar-title"><span>Admin</span></li>
+            <li class="sidebar-list"><a ui-sref="main.dashboard">Business Unit<span class="menu-icon glyphicon glyphicon-xbt"></span></a></li>
+            <li class="sidebar-list"><a ui-sref="main.objective">Business Objective<span class="menu-icon fa fa-tasks"></span></a></li>
+            <li class="sidebar-list"><a ui-sref="main.initiative">Business Initiative<span class="menu-icon fa fa-building"></span></a></li>
+            <li class="sidebar-list"><a ui-sref="main.capabilities">Business Capabilities<span class="menu-icon fa fa-cubes"></span></a></li>
+
+            <li class="sidebar-title"><span>Dependency explorer</span></li>
+            <li class="sidebar-list"><a ui-sref="main.graph({graph:'Objectives'})" >Objectives<span class="menu-icon glyphicon glyphicon-stats"></span></a></li>
+            <li class="sidebar-list"><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities<span class="menu-icon fa fa-bar-chart-o"></span></a></li>
+
+            <li class="sidebar-title"><span>Summary</span></li>
+            <li class="sidebar-list"><a ui-sref="main.summary"  >Business Unit<span class="menu-icon fa fa-sun-o"></span></a></li>
+            <!--<li class="sidebar-list"><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities<span class="menu-icon fa fa-table"></span></a></li>-->
+        </ul>
+        <div class="sidebar-footer">
+            <!--            <div class="col-xs-4">
+                            <a href="https://github.com/rdash/rdash-angular" target="_blank">
+                                Github
+                            </a>
+                        </div>-->
+
         </div>
+    </div>
+    <!-- End Sidebar -->
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dependency explorer <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+    <div id="content-wrapper">
+        <div class="page-content">
 
-                        <li><a ui-sref="main.graph({graph:'Objectives'})" >Objectives</a></li>
-                        <li><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities</a></li>
+            <!-- Header Bar -->
+            <div class="row header">
+                <div class="col-xs-12">
+                    <div class="user pull-right">
+                        <!--<div class="user pull-right">-->
+                            <div class="item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <img src="global/avatar.jpg" alt=""/>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-header">
+                                        Joe Bloggs
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="link">
+                                        <a href="#">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li class="link">
+                                        <a href="#">
+                                            Menu Item
+                                        </a>
+                                    </li>
+                                    <li class="link">
+                                        <a href="#">
+                                            Menu Item
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="link">
+                                        <a href="#">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="fa fa-bell-o"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-header">
+                                        Notifications
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">Server Down!</a>
+                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <!--<li><a  ng-if='!is_login' ui-sref="main.login">Login</a></li>
-                        <li><a  ng-if='!is_login' ui-sref="main.register">Regsiter</a></li>
-                        <li><a ng-if='is_login' ui-sref="main.logout">Logout</a></li>-->
-                        <li><a ui-sref="main.dashboard">Business Unit</a></li>
-                        <li><a ui-sref="main.objective">Business Objective</a></li>
-                        <li><a ui-sref="main.initiative">Business Initiative</a></li>
-                        <li><a ui-sref="main.capabilities">Business Capabilities</a></li>
+                        <div class="meta">
+                            <div class="page">
+                                <a class="navbar-brand" href="#"><img src="global/favicons.png"/></a>
+                                <!--Dashboard-->
+                            </div>
+                            <!--              <div class="breadcrumb-links">
+                                            Home / Dashboard
+                                          </div>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Header Bar -->
 
-                    </ul>
-                </li>
+                <!-- Main Content -->
+                <div ui-view></div>
 
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+            </div><!-- End Page Content -->
+        </div><!-- End Content Wrapper -->
+    </div><!-- End Page Wrapper -->
+    <!--</nav>-->
 
-<div ui-view></div>
+    <!--<div ui-view></div>-->

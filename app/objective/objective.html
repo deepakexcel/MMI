@@ -1,7 +1,7 @@
 <div style="padding: 10px">
     <div>
         <button ng-click="addItem();
-                saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
+                    saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             Add
         </button>
@@ -18,7 +18,7 @@
     <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
         <div class="widget">
             <div class="widget-header">
-                <h4 style="float: left;"><span class="menu-icon glyphicon glyphicon-usd"></span> Business Objective List</h4>
+                <h4 style="float: left;"><span class="menu-icon fa fa-tasks"></span> Business Objective List</h4>
                 <div class="input-group {{errorFind}}">
                     <input type="text" class="form-control" ng-model="search" placeholder="Search for..." style="width: 40%; float: right;" ng-focus="findError()" aria-describedby="inputError2Status">
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="findClose"></span>
@@ -36,7 +36,7 @@
                                 <th>Name</th>
                                 <th>Business Unit Name</th>
                                 <th>Description</th>
-                                <th style="min-width: 150px;">Actions</th>
+                                <th style="min-width: 170px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
                                 <td>{{itemObj.description}}</td>
                                 <td>
                                     <button ng-click="editObjectiveItem(itemObj, $index);
-                                            saveLoading = false;" type="button" class="btn btn-info">Edit</button>
+                                                saveLoading = false;" type="button" class="btn btn-info">Edit</button>
                                     <a tabindex="0" style="width:70px;" ng-class='{"btn-success":ifpopover == itemObj.id,"btn-danger":ifpopover != itemObj.id}'  class="btn btn-danger" ng-click="objective_delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
                                        data-content="Are you sure you want to delete business unit {{itemObj.objective_name}}?" data-html="true"  data-placement="top">
                                         <span  ng-hide="ifpopover == itemObj.id" >Delete</span>

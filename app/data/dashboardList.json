@@ -1,0 +1,55 @@
+[{
+        "id": "162",
+        "short_code": "STI",
+        "name": "Momentum Short Term Insurance",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "163",
+        "short_code": "GroupFin",
+        "name": "Group Finance",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "164",
+        "short_code": "External",
+        "name": "External",
+        "org_level": "0",
+        "display_meta_JSON": null
+    }, {
+        "id": "165",
+        "short_code": "Int",
+        "name": "International",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "166",
+        "short_code": "SharedS",
+        "name": "Shared Services",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "168",
+        "short_code": "MomR",
+        "name": "Momentum Retail",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "169",
+        "short_code": "MetR",
+        "name": "Metropolitan Retail",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "170",
+        "short_code": "C&PS",
+        "name": "Corporate and Public Segment",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }, {
+        "id": "171",
+        "short_code": "Life",
+        "name": "Momentum Life",
+        "org_level": "1",
+        "display_meta_JSON": null
+    }]

@@ -52,24 +52,24 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: "initiative/initiative.html?time=" + new Date().getTime(),
                     controller: 'InitiativeCtrl'
                 })
-		.state('main.capabilities', {
+                .state('main.capabilities', {
                     url: "/capabilities",
                     templateUrl: "capabilities/capabilities.html?time=" + new Date().getTime(),
                     controller: 'CapabilitiesCtrl'
                 })
-                
+
                 .state('main.summary', {
                     url: "/summary",
                     templateUrl: "summary/summary.html?time=" + new Date().getTime(),
                     controller: 'SummaryCtrl'
                 })
-                
+
                 .state('main.objectiveGrid', {
-                    url: "/objectiveGrid/:a",
+                    url: "/objectiveGrid/:a/:b",
                     templateUrl: "gridExplorer/objectiveGrid.html?time=" + new Date().getTime(),
                     controller: 'ObjectiveGridCtrl'
                 })
-                
+
                 .state('main.graph', {
                     url: "/graph/:graph",
                     templateUrl: "graph/graph.html?time=" + new Date().getTime(),
@@ -78,7 +78,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 .state('main.start', {
                     url: "/start",
                     templateUrl: "statrup/start.html?time=" + new Date().getTime(),
-                 controller: 'StartCtrl'
+                    controller: 'StartCtrl'
                 })
                 .state('main.logout', {
                     url: "/dashboard",

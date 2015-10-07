@@ -1,16 +1,16 @@
 <div style="padding: 15px">
-<!--    <div class="row"  style="padding-bottom: 15px;">
-        <span class="gridSpan">Business Objectives for [Business Unit Name]</span>
-    </div>-->
+    <!--    <div class="row"  style="padding-bottom: 15px;">
+            <span class="gridSpan">Business Objectives for [Business Unit Name]</span>
+        </div>-->
     <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
         <div class="widget">
             <div class="widget-header">
-                <h4>Business Objectives for [Business Unit Name]</h4>
+                <h4>Business Objectives for [{{business_Unit}}]</h4>
             </div>
             <div class="widget-body medium no-padding">
                 <div class="table-responsive">
 
-                    <table class="table table-bordered table-hover table-striped">
+                    <table class="table table-bordered table-hover ">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -25,9 +25,9 @@
                                     </div>
                                 </td> 
                             </tr>
-                            <tr ng-repeat="objItem in objGrid track by $index" ng-show="!loading">
+                            <tr ng-repeat="objItem in objGrid track by $index" ng-show="!loading" ng-class="{'success':actual == $index}">
 
-                                <td ng-click="showInitiative(objItem, $index)">{{objItem.name}}</td>
+                                <td ng-click="showInitiative(objItem, $index);" >{{objItem.name}}</td>
                                 <td>{{objItem.description}}</td>
                             </tr>
                         </tbody>
@@ -39,18 +39,14 @@
             </div>
         </div>
     </div>
-    <!--</div>-->
 
-<!--    <div class="row" style="padding-bottom: 15px;">
-        <span class="gridSpan">Business Initiative for [Selected Objective in Above Grid]</span>
-    </div>-->
 
     <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
         <div class="widget">
             <div class="widget-header">
-                <h4>Business Initiative for [Selected Objective in Above Grid]</h4>
+                <h4>Business Initiative for [{{selected_Objective}}]</h4>
             </div>
-            <div class="widget-body medium no-padding">
+            <div class="widget-body small no-padding">
                 <div class="table-responsive">
                     <table class="table" >
                         <thead>
@@ -66,7 +62,7 @@
                         </thead>
                         <tbody>
                             <tr style="text-align: center">
-                                <td colspan="3" ng-show="loading">
+                                <td colspan="3" ng-show="loadingBu">
                                     <div class="inner-circles-loader">
                                         Loading…
                                     </div>

@@ -10,6 +10,7 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
             business_unitSummary: ''
         };
         $scope.loading = true;
+        $scope.gridBox = false;
         var unitList2 = [];
         var unit = ajaxRequest.send('lookups/bu/list');
         unit.then(function (data1) {
@@ -23,11 +24,15 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
         var unitsummary2 = [];
         var recentTrace2 = [];
         var unitId;
+        var unitDispName;
         $scope.summaryfire = function (unitName) {
-            $scope.unitSummary="";
-            $scope.recentTrace=""
+            $scope.gridBox = false;
+            $scope.loading = true;
+            unitDispName = unitName;
+            $scope.unitSummary = "";
+            $scope.recentTrace = ""
             console.log(unitName);
-            
+
             for (var i = 0; i < unitList2.length; i++) {
                 if (unitList2[i].displayName == unitName) {
                     unitId = unitList2[i].id;
@@ -46,6 +51,9 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
             recent.then(function (data1) {
                 console.log(data1);
                 recentTrace2 = data1;
+                $scope.loading = false;
+                $scope.gridBox = true;
+                console.log("Id:- " + unitId);
                 $scope.recentTrace = data1;
                 $scope.loading = false;
 
@@ -59,7 +67,7 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
 
         $scope.exploreObjectives = function () {
 //            alert(unitId);
-            $state.go('main.objectiveGrid',{a: unitId})
+            $state.go('main.objectiveGrid', {a: unitId, b: unitDispName})
 //            $('#DelError_Modal').modal('show');
         }
 

@@ -1,0 +1,48 @@
+.explorer-vis .node {
+    cursor: pointer;
+    /*
+    this is important to handle mouse over and show tooltip. otherwise it will not be shown when
+    cursor is between icon and text
+    */
+    pointer-events: all;
+}
+
+.explorer-vis .link{
+    fill: none;
+    stroke: #aaa;
+    stroke-width: 1px;
+}
+
+.explorer-dropdown {
+    position: absolute;
+    display: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px -3px rgba(0, 0, 0, 0.4);
+    background: #fff;
+    z-index: 999;
+}
+
+.explorer-dropdown div {
+    height: 25px;
+    line-height: 25px;
+    padding: 0 15px 0 15px;
+    cursor: default;
+    color: #333;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.explorer-dropdown div:last-child {
+    border-bottom: 0;
+}
+
+.explorer-dropdown div:hover {
+    background-color: rgba(0, 136, 204, 0.1);
+}
+
+.mmi-tooltip {
+    position: absolute;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}

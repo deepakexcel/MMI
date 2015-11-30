@@ -1,0 +1,172 @@
+
+<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar">
+            <li class="sidebar-main">
+                <a ng-click="toggleSidebar()">
+                    Dashboard
+                    <span class="menu-icon glyphicon glyphicon-transfer"></span>
+                </a>
+            </li>
+            <li class="sidebar-list" ng-click="checkMenu('summaryMenu')"><a ui-sref="main.summary"><span>Summary</span><span class="menu-icon glyphicon  glyphicon-dashboard" ></span></a></li>
+            <!--            <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.summary">Business Unit
+                                <span class="menu-icon fa fa-sun-o"  ng-click="checkMenu('summaryMenu')"></span></a>
+                        </li>-->
+
+            <li class="sidebar-list" ng-click="checkMenu('visualizationMenu')"><a ui-sref="main.graph({graph:'Objectives'})" ><span>Visualization</span><span class="menu-icon glyphicon glyphicon-equalizer"></span></a></li>
+            <!--            <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.graph({graph:'Objectives'})" >Objectives
+                                <span class="menu-icon glyphicon glyphicon-stats" ng-click="checkMenu('visualizationMenu')"></span></a>
+                        </li>
+                        <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities
+                                <span class="menu-icon fa fa-bar-chart-o" ng-click="checkMenu('visualizationMenu')"></span></a>
+                        </li>-->
+
+            <li class="sidebar-list" ng-click="checkMenu('adminMenu')"><a ui-sref="main.dashboard"><span>Admin</span><span class="menu-icon glyphicon glyphicon-wrench"></span></a></li>
+            <!--            <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.dashboard">Business Unit
+                                <span class="menu-icon glyphicon glyphicon-xbt" ng-click="checkMenu('adminMenu')"></span></a>
+                        </li>
+                        <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.objective">Business Objective
+                                <span class="menu-icon fa fa-tasks" ng-click="checkMenu('adminMenu')"></span></a></li>
+                        <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.initiative">Business Initiative
+                                <span class="menu-icon fa fa-building" ng-click="checkMenu('adminMenu')"></span></a>
+                        </li>
+                        <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.capabilities">Business Capabilities
+                                <span class="menu-icon fa fa-cubes" ng-click="checkMenu('adminMenu')"></span></a>
+                        </li>-->
+
+        </ul>
+        <div class="sidebar-footer">
+            <!--            <div class="col-xs-4">
+                            <a href="https://github.com/rdash/rdash-angular" target="_blank">
+                                Github
+                            </a>
+                        </div>-->
+
+        </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+        <div class="page-content">
+
+            <!-- Header Bar -->
+            <div class="row header">
+                <div class="col-xs-12">
+                    <div class="user pull-right">
+                        <!--<div class="user pull-right">-->
+                        <div class="item dropdown">
+                            <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="global/avatar.jpg" alt=""/>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">
+                                    Joe Bloggs
+                                </li>
+                                <li class="divider"></li>
+                                <li class="link">
+                                    <a href="#">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li class="link">
+                                    <a href="#">
+                                        Menu Item
+                                    </a>
+                                </li>
+                                <li class="link">
+                                    <a href="#">
+                                        Menu Item
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li class="link">
+                                    <a href="#">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="item dropdown">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="fa fa-bell-o"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">
+                                    Notifications
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">Server Down!</a>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right" style="margin-top: 5px;">
+                            <li class="dropdown" ng-show="summaryMenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Summary <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+
+                                    <li><a ui-sref="main.summary" >Business Unit</a></li>
+
+
+                                </ul>
+                            </li>
+                            <li class="dropdown" ng-show="visualizationMenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Visualization <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+
+                                    <li><a ui-sref="main.graph({graph:'Objectives'})" >Objectives</a></li>
+                                    <li><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown" ng-show="adminMenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <!--<li><a  ng-if='!is_login' ui-sref="main.login">Login</a></li>
+                                    <li><a  ng-if='!is_login' ui-sref="main.register">Regsiter</a></li>
+                                    <li><a ng-if='is_login' ui-sref="main.logout">Logout</a></li>-->
+                                    <li><a ui-sref="main.dashboard">Business Unit</a></li>
+                                    <li><a ui-sref="main.objective">Business Objective</a></li>
+                                    <li><a ui-sref="main.initiative">Business Initiative</a></li>
+                                    <li><a ui-sref="main.capabilities">Business Capabilities</a></li>
+                                    <li><a ui-sref="main.explore">Explore</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="padding-top: 0px;">
+                        <div class=" pull-left">
+                            <div class="page">
+                                <a class="navbar-brand" href="#"><img style="margin-top: 9px;" src="global/favicons.png"/></a>
+
+                            </div>
+                        </div>
+                        <div class=" pull-left meta" style="padding-left: 10px">
+                            <div class="page" ng-hide="summaryMenu || visualizationMenu || adminMenu">Dashboard</div>
+                            <div class="page" ng-if="summaryMenu">Summary</div>
+                            <div class="page" ng-if="visualizationMenu">Visualization</div>
+                            <div class="page" ng-if="adminMenu">Admin</div>
+                            <div class="breadcrumb-links" ng-click="checkMenu()">
+                                <a ui-sref="main.start">Home</a>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header Bar -->
+
+            <!-- Main Content -->
+            <div ui-view></div>
+
+        </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+</div><!-- End Page Wrapper -->
+<!--</nav>-->
+
+<!--<div ui-view></div>-->
+

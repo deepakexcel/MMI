@@ -1,7 +1,7 @@
 <div style="padding: 10px">
     <div>
         <button ng-click="addItem();
-                    saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
+            saveLoading = false;" type="button" class="btn btn-success" data-toggle="modal" data-target="#objective_Modal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             Add
         </button>
@@ -18,7 +18,7 @@
     <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
         <div class="widget">
             <div class="widget-header">
-                <h4 style="float: left;"><span class="menu-icon fa fa-bullseye"></span> Business Objective List</h4>
+                <h4 style="float: left;"><span class="menu-icon fa fa-tasks"></span> Business Objective List</h4>
                 <div class="input-group {{errorFind}}">
                     <input type="text" class="form-control" ng-model="search" placeholder="Search for..." style="width: 40%; float: right;" ng-focus="findError()" aria-describedby="inputError2Status">
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="findClose"></span>
@@ -53,7 +53,7 @@
                                 <td>{{itemObj.description}}</td>
                                 <td>
                                     <button ng-click="editObjectiveItem(itemObj, $index);
-                                                saveLoading = false;" type="button" class="btn btn-info">Edit</button>
+                                            saveLoading = false;" type="button" class="btn btn-info">Edit</button>
                                     <a tabindex="0" style="width:70px;" ng-class='{"btn-success":ifpopover == itemObj.id,"btn-danger":ifpopover != itemObj.id}'  class="btn btn-danger" ng-click="objective_delPopover(itemObj, $index);" ng-blur="hidePopove(itemObj, $index)"  id= "{{$index}}" role="button" data-toggle="popover" data-trigger="manual"  title="Confirmation <button ng-click='hidePopove(itemObj, $index)' class='crossbtn glyphicon glyphicon-remove'></button> " 
                                        data-content="Are you sure you want to delete business unit {{itemObj.objective_name}}?" data-html="true"  data-placement="top">
                                         <span  ng-hide="ifpopover == itemObj.id" >Delete</span>
@@ -64,50 +64,8 @@
                                 </td>
                             </tr>
                         </tbody>
-
-                        <div class="modal fade" id="objective_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">{{model_title}}</h4>
-                                    </div>
-                                    <div class="modal-body">
-
-
-                                        <form>
-
-                                            <div class="form-group {{errorName}}">
-                                                <label>Name</label>
-                                                <input type="text" value="{{item.objective_name}}" ng-model="item.objective_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
-                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
-                                            </div>
-                                            <div class="form-group {{errorUnitName}}">
-                                                <label>Business Unit Name</label>
-                                                <select class="form-control" ng-model="item.business_unit" value="hellooogihfd" ng-focus="errorHideSelect()">
-                                                    <option  ng-repeat="itemObj in unitList track by $index">{{itemObj.displayName}}</option></select>
-                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Description</label>
-                                                <input type="text" value="{{item.description}}" ng-model="item.description" class="form-control" id="desc" placeholder="Description">
-                                            </div>
-                                        </form>
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;">
-
-                                        </div>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button ng-click="saveObjectiveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                                        <button ng-click="editObjectiveRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                        
+                        <add-edit-obj node="item" unit="unitList" btn="buttonShow"> </add-edit-obj>
 
 
                         <!--Delete Error Modal -->
@@ -129,7 +87,6 @@
                         </div><!-- /.modal -->
 
                     </table>
-
                 </div>
             </div>
         </div>

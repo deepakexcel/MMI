@@ -17,7 +17,8 @@ var app = angular.module('MMI', [
     'MMI.version',
     'MMI.start',
     'MMI.graph',
-    'MMI.explore'
+    'MMI.explore',
+    'MMI.dir'
 ]);
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -96,4 +97,3 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 });
         $urlRouterProvider.otherwise('/main/start');
     }]);
-

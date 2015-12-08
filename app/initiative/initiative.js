@@ -1,7 +1,7 @@
 'use strict';
 var dashMod = angular.module('MMI.initiative', ['MMI.ajaxService', 'ngStorage']);
-dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
-    function($scope, ajaxRequest, $q, $timeout) {
+dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$rootScope',
+    function ($scope, ajaxRequest, $q, $timeout, $rootScope) {
         window.document.title = "Business Initiative";
         $scope.model_title = 'Add Business Initiative';
         $scope.initiative_list = {};
@@ -13,28 +13,30 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             parent_name: ''
         };
         $scope.limits = [{
-            value: '5',
-            text: '5'
-        }, {
-            value: '10',
-            text: '10'
-        }];
-	$scope.active=['active','0','0',''];
-	$scope.icon="glyphicon glyphicon-chevron-down";
-	$scope.pageNumber = 1;
-	$scope.first=1;$scope.middle=2;$scope.last=3;
+                value: '5',
+                text: '5'
+            }, {
+                value: '10',
+                text: '10'
+            }];
+        $scope.active = ['active', '0', '0', ''];
+        $scope.icon = "glyphicon glyphicon-chevron-down";
+        $scope.pageNumber = 1;
+        $scope.first = 1;
+        $scope.middle = 2;
+        $scope.last = 3;
         $scope.order = "ASC";
         $scope.loading = true;
         var parentList2 = [];
         var parent = ajaxRequest.send('lookups/bi/parentlist');
-        parent.then(function(data1) {
+        parent.then(function (data1) {
             console.log(data1);
             parentList2 = data1;
             $scope.parentList = data1;
             $scope.loading = false;
 
             var ajax = ajaxRequest.send('grids/bi/1/id/ASC/5');
-            ajax.then(function(data) {
+            ajax.then(function (data) {
                 for (var i = 0; i < data.length; i++) {
                     data[i].status = false;
                     var arr = [];
@@ -53,47 +55,48 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 $scope.loading = false;
             });
         });
-        $scope.nextPage = function() {
+        $scope.nextPage = function () {
             $scope.loading = true;
-		var size = $scope.pageSize;
-            	var page = $scope.pageNumber;
-		console.log(page);
-		if(page===2)
-		{
-		$scope.first=2;
-		$scope.middle=3;
-		$scope.last=4;
-		$scope.active[0]=" ";
-		$scope.active[1]="active";
-		$scope.active[2]=" ";
-		}
-		
-		else if(page==3)
-		{
-		$scope.active[0]=" ";
-		$scope.active[1]="";
-		$scope.active[2]="active";
-		}
-		else
-		{
-		$scope.active[0]=" ";
-		$scope.active[1]="active";
-		}
+            var size = $scope.pageSize;
+            var page = $scope.pageNumber;
+            console.log(page);
+            if (page === 2)
+            {
+                $scope.first = 2;
+                $scope.middle = 3;
+                $scope.last = 4;
+                $scope.active[0] = " ";
+                $scope.active[1] = "active";
+                $scope.active[2] = " ";
+            }
+
+            else if (page == 3)
+            {
+                $scope.active[0] = " ";
+                $scope.active[1] = "";
+                $scope.active[2] = "active";
+            }
+            else
+            {
+                $scope.active[0] = " ";
+                $scope.active[1] = "active";
+            }
             if (page == 4) {
                 console.log("NO next Page");
-		$scope.active[1]="";
-		
+                $scope.active[1] = "";
+
             } else {
-		
+
                 page = page + 1;
-		
+
                 $scope.pageNumber = $scope.pageNumber + 1;
                 var parentList2 = [];
                 var parent = ajaxRequest.send('lookups/bi/parentlist');
-                parent.then(function(data1) {
+                parent.then(function (data1) {
                     parentList2 = data1;
+                    $scope.parentList = data1;
                     var ajax = ajaxRequest.send('grids/bi/' + page + '/id/ASC/5');
-                    ajax.then(function(data) {
+                    ajax.then(function (data) {
                         for (var i = 0; i < data.length; i++) {
                             data[i].status = false;
                             var arr = [];
@@ -117,31 +120,31 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
 
         };
 
-        $scope.prevPage = function() {
-		
+        $scope.prevPage = function () {
+
             $scope.loading = true;
-	var size = $scope.pageSize;
-	var order = $scope.order;
+            var size = $scope.pageSize;
+            var order = $scope.order;
             var page = $scope.pageNumber;
-	if(page===3)
-	{
-	$scope.first=2;
-	$scope.middle=3;
-	$scope.last=4;
-	}
+            if (page === 3)
+            {
+                $scope.first = 2;
+                $scope.middle = 3;
+                $scope.last = 4;
+            }
             if (page == 1) {
                 console.log("no previous page");
             } else {
-		$scope.active[page-1]=" ";
+                $scope.active[page - 1] = " ";
                 page = page - 1;
-		$scope.active[page-1]="active";
+                $scope.active[page - 1] = "active";
                 $scope.pageNumber = $scope.pageNumber - 1;
                 var parentList2 = [];
                 var parent = ajaxRequest.send('lookups/bi/parentlist');
-                parent.then(function(data1) {
+                parent.then(function (data1) {
                     parentList2 = data1;
-                    var ajax = ajaxRequest.send('grids/bi/' + page + '/id/'+order+'/'+size+'/');
-                    ajax.then(function(data) {
+                    var ajax = ajaxRequest.send('grids/bi/' + page + '/id/' + order + '/' + size + '/');
+                    ajax.then(function (data) {
                         for (var i = 0; i < data.length; i++) {
                             data[i].status = false;
                             var arr = [];
@@ -163,42 +166,42 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
 
 
         };
-        $scope.goPage = function(pageN) {
-	var page=$scope.pageNumber;	
-        $scope.loading = true;
-	console.log(pageN);
-	if(pageN===3)
-	{
-	$scope.first=2;
-	$scope.middle=3;
-	$scope.last=4;
-	$scope.active[0]=" ";
-	$scope.active[1]="active"
-	$scope.active[2]="";
-	}
-	else if(pageN===4)
-	{
-	$scope.active[0]=" ";
-	$scope.active[1]=""
-	$scope.active[2]="active";
-	}
-	else
-	{
-	$scope.active[page-1]=" ";
-	$scope.active[pageN-1]="active";
-	}
-	var size = $scope.pageSize;
-	var order = $scope.order;
-		
-		$scope.pageNumber=pageN;	
+        $scope.goPage = function (pageN) {
+            var page = $scope.pageNumber;
+            $scope.loading = true;
             console.log(pageN);
-		
+            if (pageN === 3)
+            {
+                $scope.first = 2;
+                $scope.middle = 3;
+                $scope.last = 4;
+                $scope.active[0] = " ";
+                $scope.active[1] = "active"
+                $scope.active[2] = "";
+            }
+            else if (pageN === 4)
+            {
+                $scope.active[0] = " ";
+                $scope.active[1] = ""
+                $scope.active[2] = "active";
+            }
+            else
+            {
+                $scope.active[page - 1] = " ";
+                $scope.active[pageN - 1] = "active";
+            }
+            var size = $scope.pageSize;
+            var order = $scope.order;
+
+            $scope.pageNumber = pageN;
+            console.log(pageN);
+
             var parentList2 = [];
             var parent = ajaxRequest.send('lookups/bi/parentlist');
-            parent.then(function(data1) {
+            parent.then(function (data1) {
                 parentList2 = data1;
-                var ajax = ajaxRequest.send('grids/bi/' + pageN + '/id/'+order+'/'+size+'/');
-                ajax.then(function(data) {
+                var ajax = ajaxRequest.send('grids/bi/' + pageN + '/id/' + order + '/' + size + '/');
+                ajax.then(function (data) {
                     for (var i = 0; i < data.length; i++) {
                         data[i].status = false;
                         var arr = [];
@@ -216,12 +219,12 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 });
             });
         };
-        $scope.update = function(value) {
+        $scope.update = function (value) {
             console.log($scope.pageSize);
             var size = $scope.pageSize;
-	var order = $scope.order;
+            var order = $scope.order;
             var pageIn = ajaxRequest.send('bi/list');
-            pageIn.then(function(data) {
+            pageIn.then(function (data) {
                 var len = data.length;
                 var page = len / size;
                 page = Math.round(page);
@@ -236,14 +239,12 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             $scope.loading = true;
             var parentList2 = [];
             var parent = ajaxRequest.send('lookups/bi/parentlist');
-            parent.then(function(data1) {
+            parent.then(function (data1) {
                 console.log(data1);
                 parentList2 = data1;
                 $scope.parentList = data1;
-
-
-                var ajax = ajaxRequest.send('grids/bi/1/id/'+order+'/' + size + '/');
-                ajax.then(function(data) {
+                var ajax = ajaxRequest.send('grids/bi/1/id/' + order + '/' + size + '/');
+                ajax.then(function (data) {
                     for (var i = 0; i < data.length; i++) {
                         data[i].status = false;
                         var arr = [];
@@ -265,49 +266,49 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
 
         };
 
-        $scope.sortPage = function(column) {
-		if(column=='name')
-		{
-		$scope.show1='a';
-		}
-		else if(column=='description')
-		{
-		$scope.show3='a';
-		}
-		else
-		{
-		$scope.show2='a';
-		}
-		if($scope.icon==="glyphicon glyphicon-chevron-down")
-		{		
-		$scope.icon="glyphicon glyphicon-chevron-up";
-		}
-		else
-		{
-		$scope.icon="glyphicon glyphicon-chevron-down";
-		}
+        $scope.sortPage = function (column) {
+            if (column == 'name')
+            {
+                $scope.show1 = 'a';
+            }
+            else if (column == 'description')
+            {
+                $scope.show3 = 'a';
+            }
+            else
+            {
+                $scope.show2 = 'a';
+            }
+            if ($scope.icon === "glyphicon glyphicon-chevron-down")
+            {
+                $scope.icon = "glyphicon glyphicon-chevron-up";
+            }
+            else
+            {
+                $scope.icon = "glyphicon glyphicon-chevron-down";
+            }
             var column = column;
             var order = $scope.order;
             var size = $scope.pageSize;
             if (order === "ASC") {
                 $scope.order = "DESC";
-		order=$scope.order;
+                order = $scope.order;
                 //console.log(order);
             } else {
-		$scope.order="ASC";
+                $scope.order = "ASC";
                 order = "ASC";
             }
             $scope.loading = true;
             var parentList2 = [];
             var parent = ajaxRequest.send('lookups/bi/parentlist');
-            parent.then(function(data1) {
+            parent.then(function (data1) {
                 console.log(data1);
                 parentList2 = data1;
                 $scope.parentList = data1;
 
 
                 var ajax = ajaxRequest.send('grids/bi/1/' + column + '/' + order + '/' + size + '/');
-                ajax.then(function(data) {
+                ajax.then(function (data) {
                     for (var i = 0; i < data.length; i++) {
                         data[i].status = false;
                         var arr = [];
@@ -326,9 +327,9 @@ dashMod.controller('InitiativeCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                     $scope.loading = false;
                 });
             });
-console.log($scope.order);
+            console.log($scope.order);
         };
-        $scope.addInitiativeItem = function() {
+        $scope.addInitiativeItem = function () {
             $scope.hideAllError();
             $scope.buttonShow = true;
             $scope.model_title = 'Add Business Initiative';
@@ -342,7 +343,7 @@ console.log($scope.order);
         };
 
 
-        $scope.editInitiativeItem = function(item, index) {
+        $scope.editInitiativeItem = function (item, index) {
             $scope.hideAllError();
             console.log(item);
             $scope.buttonShow = false;
@@ -354,7 +355,7 @@ console.log($scope.order);
                     unitName = parentList2[i].initiativeName;
                 }
             }
-            $scope.item = {
+            $scope.item3 = {
                 id: item.id,
                 initiative_name: item.name,
                 parent_initiative: item.parent_name,
@@ -364,13 +365,18 @@ console.log($scope.order);
                 parent_name: item.parent_name
 
             };
-            $('#initiative_Modal').modal({
-                backdrop: true
-            })
+            $rootScope.$emit('modal-in-show');
         };
+        $scope.$on('modal-close-in', function (ev, data) {
+            console.log(data);
+            if (data)
+            {
+                $scope.initiative_list.splice($scope.item.index, 1, data);
+            }
+        });
 
         $scope.initiative_list = [];
-        $scope.saveInitiativeItem = function() {
+        $scope.saveInitiativeItem = function () {
 
             if (!$scope.item.initiative_name && !$scope.item.parent_initiative) {
                 $scope.errorName = "has-error has-feedback";
@@ -405,104 +411,105 @@ console.log($scope.order);
                 };
                 var promise = ajaxRequest.send(url, values, 'POST');
                 promise.then(
-                    function(result) {
-                        if (result.status == "OK") {
-                            $scope.saveLoading = false;
-                            myobj.id = result.lastid;
-                            myobj.name = $scope.item.initiative_name;
-                            myobj.parent_initiative_id = parent_id;
-                            myobj.description = $scope.item.description;
-                            myobj.status = false;
-                            myobj.parent_name = $scope.item.parent_initiative;
-                            $scope.initiative_list.unshift(myobj);
-                            $('#initiative_Modal').modal('hide');
-                        } else {
-                            console.log(data.error);
-                            //alert(result.error);
+                        function (result) {
+                            if (result.status == "OK") {
+                                $scope.saveLoading = false;
+                                myobj.id = result.lastid;
+                                myobj.name = $scope.item.initiative_name;
+                                myobj.parent_initiative_id = parent_id;
+                                myobj.description = $scope.item.description;
+                                myobj.status = false;
+                                myobj.parent_name = $scope.item.parent_initiative;
+                                $scope.initiative_list.unshift(myobj);
+                                $('#initiative_Modal').modal('hide');
+                            } else {
+                                console.log(data.error);
+                                //alert(result.error);
+                                $scope.alertmsg = true;
+                                $scope.saveLoading = false;
+                                $scope.hideAlert();
+                                $('#initiative_Modal').modal('hide');
+                            }
+                        });
+                promise.catch(
+                        function (e) {
+                            console.log(e);
                             $scope.alertmsg = true;
                             $scope.saveLoading = false;
                             $scope.hideAlert();
-                            $('#initiative_Modal').modal('hide');
-                        }
-                    });
-                promise.catch(
-                    function(e) {
-                        console.log(e);
-                        $scope.alertmsg = true;
-                        $scope.saveLoading = false;
-                        $scope.hideAlert();
-                    });
+                        });
             }
         };
-        $scope.page = function() {};
-        $scope.editInitiativeRecord = function(indexx) {
-            var parent_id = 0;
-            if (!$scope.item.initiative_name && !$scope.item.parent_initiative) {
-                $scope.errorName = "has-error has-feedback";
-                $scope.nameClose = true;
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
-                $scope.saveLoading = false;
-                //alert("pls must fill all the field");
-            } else if (!$scope.item.initiative_name) {
-                $scope.errorName = "has-error has-feedback";
-                $scope.nameClose = true;
-            } else if (!$scope.item.parent_initiative) {
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
-            } else {
-                $scope.saveLoading = true;
-                for (var i = 0; i < parentList2.length; i++) {
+        $scope.page = function () {
+        };
+//        $scope.editInitiativeRecord = function(indexx) {
+//            var parent_id = 0;
+//            if (!$scope.item.initiative_name && !$scope.item.parent_initiative) {
+//                $scope.errorName = "has-error has-feedback";
+//                $scope.nameClose = true;
+//                $scope.errorUnitName = "has-error has-feedback";
+//                $scope.selectClose = true;
+//                $scope.saveLoading = false;
+//                //alert("pls must fill all the field");
+//            } else if (!$scope.item.initiative_name) {
+//                $scope.errorName = "has-error has-feedback";
+//                $scope.nameClose = true;
+//            } else if (!$scope.item.parent_initiative) {
+//                $scope.errorUnitName = "has-error has-feedback";
+//                $scope.selectClose = true;
+//            } else {
+//                $scope.saveLoading = true;
+//                for (var i = 0; i < parentList2.length; i++) {
+//
+//                    if (parentList2[i].initiativeName == $scope.item.parent_initiative) {
+//                        parent_id = parentList2[i].initiativeId;
+//                    }
+//                }
+//                var url = 'bi/update';
+//                //Id needs to be included to the API call:
+//                var val = {
+//                    "id": $scope.item.id,
+//                    "parent_initiative_id": parent_id,
+//                    "description": $scope.item.description,
+//                    "name": $scope.item.initiative_name,
+//                    "parent_name": $scope.item.parent_initiative,
+//                    "status": false
+//                };
+//                var values = {
+//                    "id": $scope.item.id,
+//                    "parent_initiative_id": parent_id,
+//                    "name": $scope.item.initiative_name,
+//                    "description": $scope.item.description
+//                };
+//                console.log("Going to send update. Values listed below:");
+//                var promise = ajaxRequest.send(url, values, 'POST');
+//                promise.then(
+//                    function(result) {
+//                        if (result.status == "OK") {
+//                            $scope.initiative_list.splice($scope.item.index, 1, val);
+//                            $scope.saveLoading = false;
+//                            $('#initiative_Modal').modal('hide');
+//                        } else {
+//                            console.log(result.error);
+//                            // alert(result.error);
+//                            $scope.alertmsg = true;
+//                            $scope.saveLoading = false;
+//                            $scope.hideAlert();
+//                            $('#initiative_Modal').modal('hide');
+//                        }
+//                    });
+//                promise.catch(
+//                    function(e) {
+//                        console.log(e);
+//                        //alert(e);
+//                        $scope.alertmsg = true;
+//                        $scope.saveLoading = false;
+//                        $scope.hideAlert();
+//                    });
+//            }
+//        }
 
-                    if (parentList2[i].initiativeName == $scope.item.parent_initiative) {
-                        parent_id = parentList2[i].initiativeId;
-                    }
-                }
-                var url = 'bi/update';
-                //Id needs to be included to the API call:
-                var val = {
-                    "id": $scope.item.id,
-                    "parent_initiative_id": parent_id,
-                    "description": $scope.item.description,
-                    "name": $scope.item.initiative_name,
-                    "parent_name": $scope.item.parent_initiative,
-                    "status": false
-                };
-                var values = {
-                    "id": $scope.item.id,
-                    "parent_initiative_id": parent_id,
-                    "name": $scope.item.initiative_name,
-                    "description": $scope.item.description
-                };
-                console.log("Going to send update. Values listed below:");
-                var promise = ajaxRequest.send(url, values, 'POST');
-                promise.then(
-                    function(result) {
-                        if (result.status == "OK") {
-                            $scope.initiative_list.splice($scope.item.index, 1, val);
-                            $scope.saveLoading = false;
-                            $('#initiative_Modal').modal('hide');
-                        } else {
-                            console.log(result.error);
-                            // alert(result.error);
-                            $scope.alertmsg = true;
-                            $scope.saveLoading = false;
-                            $scope.hideAlert();
-                            $('#initiative_Modal').modal('hide');
-                        }
-                    });
-                promise.catch(
-                    function(e) {
-                        console.log(e);
-                        //alert(e);
-                        $scope.alertmsg = true;
-                        $scope.saveLoading = false;
-                        $scope.hideAlert();
-                    });
-            }
-        }
-
-        $scope.deleteInitiativeItem = function(items, indexs) {
+        $scope.deleteInitiativeItem = function (items, indexs) {
             console.log(items);
             $scope.ifpopover = items.id;
             $scope.deleteLoader = items.id;
@@ -512,33 +519,33 @@ console.log($scope.order);
             };
             var promise = ajaxRequest.send(url, dataId, 'POST');
             promise.then(
-                function(result) {
-                    $scope.deleteLoader = false;
-                    if (result.status == "OK") {
-                        $scope.initiative_list.splice(indexs, 1);
-                    } else {
-                        console.log(result.error);
+                    function (result) {
+                        $scope.deleteLoader = false;
+                        if (result.status == "OK") {
+                            $scope.initiative_list.splice(indexs, 1);
+                        } else {
+                            console.log(result.error);
+                            $('#DelError_Modal').modal('show');
+                            $scope.delErr = result.error;
+                            //alert(result.error);
+                            //$scope.alertmsg = true;
+                            //$scope.hideAlert();
+                            $scope.ifpopover = "";
+                        }
+                    });
+            promise.catch(
+                    function (e) {
+                        console.log(e);
+                        //alert(e);
                         $('#DelError_Modal').modal('show');
-                        $scope.delErr = result.error;
-                        //alert(result.error);
+                        $scope.delErr = e;
                         //$scope.alertmsg = true;
+                        $scope.deleteLoader = false;
                         //$scope.hideAlert();
                         $scope.ifpopover = "";
-                    }
-                });
-            promise.catch(
-                function(e) {
-                    console.log(e);
-                    //alert(e);
-                    $('#DelError_Modal').modal('show');
-                    $scope.delErr = e;
-                    //$scope.alertmsg = true;
-                    $scope.deleteLoader = false;
-                    //$scope.hideAlert();
-                    $scope.ifpopover = "";
-                });
+                    });
         }
-        $scope.initiative_delPopover = function(item, index) {
+        $scope.initiative_delPopover = function (item, index) {
             var elem = angular.element(document.getElementById(index));
             if (item.status == false) {
                 item.status = true;
@@ -555,7 +562,7 @@ console.log($scope.order);
             }
         }
 
-        $scope.hidePopove = function(item, index) {
+        $scope.hidePopove = function (item, index) {
             item.status = false;
             var elem = angular.element(document.getElementById(index));
             elem.popover('hide');
@@ -563,12 +570,12 @@ console.log($scope.order);
             $scope.ifpopover = "";
         }
 
-        $scope.findInitiativeRecord = function() {
+        $scope.findInitiativeRecord = function () {
             $scope.errorFind = "";
             if (!$scope.search) {
                 $scope.errorFind = "has-error has-feedback";
                 $scope.findClose = "true";
-                $timeout(function() {
+                $timeout(function () {
                     $scope.errorFind = "";
                     $scope.findClose = "false";
                 }, 5000);
@@ -581,46 +588,47 @@ console.log($scope.order);
                 };
                 var promise = ajaxRequest.send(url, srchVal, 'POST');
                 promise.then(
-                    function(result) {
-                        console.log(result);
+                        function (result) {
+                            console.log(result);
 
-                        if (result.status == "OK") {} else {
-                            console.log(result.error);
-                            //alert(result.error);
+                            if (result.status == "OK") {
+                            } else {
+                                console.log(result.error);
+                                //alert(result.error);
+                                $scope.alertmsg = true;
+                                $scope.hideAlert();
+                            }
+                        });
+                promise.catch(
+                        function (e) {
+                            console.log(e);
+                            //alert(e);
                             $scope.alertmsg = true;
                             $scope.hideAlert();
-                        }
-                    });
-                promise.catch(
-                    function(e) {
-                        console.log(e);
-                        //alert(e);
-                        $scope.alertmsg = true;
-                        $scope.hideAlert();
-                    });
+                        });
             }
         }
 
-        $scope.hideAllError = function() {
+        $scope.hideAllError = function () {
             $scope.errorName = "";
             $scope.nameClose = false;
             $scope.errorUnitName = "";
             $scope.selectClose = false;
         }
-        $scope.hideAlert = function() {
-            $timeout(function() {
+        $scope.hideAlert = function () {
+            $timeout(function () {
                 $scope.alertmsg = false;
             }, 10000);
         }
-        $scope.errorHideName = function() {
+        $scope.errorHideName = function () {
             $scope.errorName = "";
             $scope.nameClose = false;
         }
-        $scope.errorHideSelect = function() {
+        $scope.errorHideSelect = function () {
             $scope.errorUnitName = "";
             $scope.selectClose = false;
         }
-        $scope.findError = function() {
+        $scope.findError = function () {
             $scope.errorFind = "";
             $scope.findClose = false;
         }

@@ -102,11 +102,11 @@
                     <div class="widget-body x-small">
                         <div class="row">
                             <div class="col-xs-12">
-                        <div class="widget-icon orange pull-left">
-                            <i class="fa fa-battery-full"></i>
-                        </div>
-                        <div class="title col-xs-5" style="font-size: 18px;">{{unitSummary.summary.HASCapabilities}}</div>
-                        <div class="comment col-xs-7" style="font-size: 18px;">HAS Capabilities</div>
+                                <div class="widget-icon orange pull-left">
+                                    <i class="fa fa-battery-full"></i>
+                                </div>
+                                <div class="title col-xs-5" style="font-size: 18px;">{{unitSummary.summary.HASCapabilities}}</div>
+                                <div class="comment col-xs-7" style="font-size: 18px;">HAS Capabilities</div>
                             </div>
                         </div>
                         <!--                        <div >
@@ -121,6 +121,8 @@
 
 
         <div class="col-lg-8">
+            <button type="button" ng-show="unitList.length" class="btn btn-default exp-btn" ui-sref="main.explore({id: id})">Summary Graph</button>
+
             <div class="col-lg-10" style="width: 100% ! important; padding-left: 0;">
                 <div class="widget">
                     <div class="widget-header">
@@ -184,4 +186,3 @@
         </div><!-- /.modal -->
     </div>
 </div>
-

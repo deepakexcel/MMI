@@ -1,8 +1,8 @@
 
 'use strict';
 var dashMod = angular.module('MMI.objective', ['MMI.ajaxService', 'ngStorage']);
-dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
-    function ($scope, ajaxRequest, $q, $timeout) {
+dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$rootScope',
+    function ($scope, ajaxRequest, $q, $timeout, $rootScope) {
         window.document.title = "Business Objective";
         $scope.model_title = 'Add Business Objective';
         $scope.objective_list = {};
@@ -13,6 +13,7 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
             status: '',
             unit_name: ''
         };
+     
         $scope.loading = true;
         var unitList2 = [];
         var unit = ajaxRequest.send('lookups/bu/list');
@@ -77,10 +78,9 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                 description: item.description,
                 index: index,
                 status: item.status,
-                unit_name: item.unit_name
-
+                unit_id: item.business_unit_id
             };
-            $('#objective_Modal').modal({backdrop: true})
+            $rootScope.$emit('modal-obj-show');
         };
 
         $scope.objective_list = [];
@@ -140,60 +140,70 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
         };
         $scope.page = function () {
         };
-        $scope.editObjectiveRecord = function (indexx) {
-            var bussUnit = 0;
-            if (!$scope.item.objective_name && !$scope.item.business_unit) {
-                $scope.errorName = "has-error has-feedback";
-                $scope.nameClose = true;
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
-                $scope.saveLoading = false;
-                //alert("pls must fill all the field");
-            } else if (!$scope.item.objective_name) {
-                $scope.errorName = "has-error has-feedback";
-                $scope.nameClose = true;
-            } else if (!$scope.item.business_unit) {
-                $scope.errorUnitName = "has-error has-feedback";
-                $scope.selectClose = true;
-            } else {
-                $scope.saveLoading = true;
-                for (var i = 0; i < unitList2.length; i++) {
-
-                    if (unitList2[i].displayName == $scope.item.business_unit) {
-                        bussUnit = unitList2[i].id;
-                    }
-                }
-                var url = 'bo/update';
-                //Id needs to be included to the API call:
-                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name, "unit_name": $scope.item.business_unit, "status": false};
-                var values = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
-                console.log("Going to send update. Values listed below:");
-                var promise = ajaxRequest.send(url, values, 'POST');
-                promise.then(
-                        function (result) {
-                            if (result.status == "OK") {
-                                $scope.objective_list.splice($scope.item.index, 1, val);
-                                $scope.saveLoading = false;
-                                $('#objective_Modal').modal('hide');
-                            } else {
-                                console.log(result.error);
-                                // alert(result.error);
-                                $scope.alertmsg = true;
-                                $scope.saveLoading = false;
-                                $scope.hideAlert();
-                                $('#objective_Modal').modal('hide');
-                            }
-                        });
-                promise.catch(
-                        function (e) {
-                            console.log(e);
-                            //alert(e);
-                            $scope.alertmsg = true;
-                            $scope.saveLoading = false;
-                            $scope.hideAlert();
-                        });
+        $scope.$on('modal-close-obj', function (ev, data) {
+            console.log(data);
+            if (!data.type)
+            {
+                $scope.objective_list.splice($scope.item.index, 1, data.data);
             }
-        }
+            else {
+                $scope.objective_list.unshift(data.data)
+            }
+        });
+//        $scope.editObjectiveRecord = function (indexx) {
+//            var bussUnit = 0;
+//            if (!$scope.item.objective_name && !$scope.item.business_unit) {
+//                $scope.errorName = "has-error has-feedback";
+//                $scope.nameClose = true;
+//                $scope.errorUnitName = "has-error has-feedback";
+//                $scope.selectClose = true;
+//                $scope.saveLoading = false;
+//                //alert("pls must fill all the field");
+//            } else if (!$scope.item.objective_name) {
+//                $scope.errorName = "has-error has-feedback";
+//                $scope.nameClose = true;
+//            } else if (!$scope.item.business_unit) {
+//                $scope.errorUnitName = "has-error has-feedback";
+//                $scope.selectClose = true;
+//            } else {
+//                $scope.saveLoading = true;
+//                for (var i = 0; i < unitList2.length; i++) {
+//
+//                    if (unitList2[i].displayName == $scope.item.business_unit) {
+//                        bussUnit = unitList2[i].id;
+//                    }
+//                }
+//                var url = 'bo/update';
+//                //Id needs to be included to the API call:
+//                var val = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name, "unit_name": $scope.item.business_unit, "status": false};
+//                var values = {"id": $scope.item.id, "business_unit_id": bussUnit, "description": $scope.item.description, "name": $scope.item.objective_name};
+//                console.log("Going to send update. Values listed below:");
+//                var promise = ajaxRequest.send(url, values, 'POST');
+//                promise.then(
+//                        function (result) {
+//                            if (result.status == "OK") {
+//                                $scope.objective_list.splice($scope.item.index, 1, val);
+//                                $scope.saveLoading = false;
+//                                $('#objective_Modal').modal('hide');
+//                            } else {
+//                                console.log(result.error);
+//                                // alert(result.error);
+//                                $scope.alertmsg = true;
+//                                $scope.saveLoading = false;
+//                                $scope.hideAlert();
+//                                $('#objective_Modal').modal('hide');
+//                            }
+//                        });
+//                promise.catch(
+//                        function (e) {
+//                            console.log(e);
+//                            //alert(e);
+//                            $scope.alertmsg = true;
+//                            $scope.saveLoading = false;
+//                            $scope.hideAlert();
+//                        });
+//            }
+//        }
 
         $scope.deleteObjectiveItem = function (items, indexs) {
             $scope.ifpopover = items.id;
@@ -289,31 +299,13 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout',
                             $scope.hideAlert();
                         });
             }
-        }
-
-
+        };
         $scope.hideAllError = function () {
             $scope.errorName = "";
             $scope.nameClose = false;
             $scope.errorUnitName = "";
             $scope.selectClose = false;
-        }
-        $scope.hideAlert = function () {
-            $timeout(function () {
-                $scope.alertmsg = false;
-            }, 10000);
-        }
-        $scope.errorHideName = function () {
-            $scope.errorName = "";
-            $scope.nameClose = false;
-        }
-        $scope.errorHideSelect = function () {
-            $scope.errorUnitName = "";
-            $scope.selectClose = false;
-        }
-        $scope.findError = function () {
-            $scope.errorFind = "";
-            $scope.findClose = false;
-        }
+        };
+
 
     }]);

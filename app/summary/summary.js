@@ -40,6 +40,8 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
 
                 }
             }
+            $scope.id=unitId;
+            
             var summaryData = ajaxRequest.send('bu/summary?id=' + unitId);
             summaryData.then(function (data) {
 
@@ -85,4 +87,3 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
         }
 
     }]);
-

@@ -2,259 +2,39 @@
     'use strict';
     angular.module('MMI.explore')
             .factory('Explorer', exploreCtrl)
-            .factory('data', data);
-    function data() {
-        return {
-            "id": "1",
-            "short_code": "BU A",
-            "name": "Business Unit A",
-            "org_level": "1",
-            "display_meta_JSON": null,
-            "viewinfo": {
-                "color": "#26334b",
-                "label": "BU A",
-                "hint": "Business Unit A",
-                "shape": "square",
-                "actions": [
-                    {id: "edit", name: "Edit"},
-                    {id: "add_objective", name: "Add Objective"}
-                ]
-            },
-            "objectives": [
-                {
-                    "id": "1",
-                    "business_unit_id": "1",
-                    "name": "BO 1",
-                    "description": "Demo Objective BO 1 with id 1",
-                    "parent_objective_id": "0",
-                    "viewinfo": {
-                        "color": "#26334b",
-                        "label": "Objective",
-                        "hint": "BO 1",
-                        "shape": "circle",
-                        "actions": [
-                            {"id": "edit", "name": "Edit"},
-                            {"id": "add_sub_objective", "name": "Add Objective"},
-                            {"id": "add_initiative", "name": "Add Initiative"}
-                        ]
-                    },
-                    "objectives": [
-                        {
-                            "id": "2",
-                            "business_unit_id": "1",
-                            "name": "BO 1.1",
-                            "description": "Demo Sub Objective BO 1.1 with id 2",
-                            "parent_objective_id": "1",
-                            "viewinfo": {
-                                "color": "#26334b",
-                                "label": "objective",
-                                "hint": "BO 1.1",
-                                "shape": "small-circle",
-                                "actions": [
-                                    {"id": "edit", "name": "Edit"},
-                                    {"id": "add_initiative", "name": "Add Initiative"}
-                                ]
-                            },
-                            "initiatives": [
-                                {
-                                    "id": "4",
-                                    "parent_initiative_id": "0",
-                                    "name": "I4",
-                                    "description": "Demo Inititaive I4 with id 4",
-                                    "ragstatus": "N",
-                                    "duedate": "2016-01-01",
-                                    "viewinfo": {
-                                        "color": "#26334b",
-                                        "label": "initiative",
-                                        "hint": "I4",
-                                        "shape": "lightbulb",
-                                        "actions": [
-                                            {"id": "edit", "name": "Edit"},
-                                            {"id": "add_sub_initiative", "name": "Add Sub Initiative"},
-                                            {"id": "add_dependancy_new", "name": "Add Dependancy (NEW)"},
-                                            {"id": "add_dependancy_extend", "name": "Add Dependancy (EXTEND)"},
-                                            {"id": "add_dependancy_use", "name": "Add Dependancy (USE)"}
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "5",
-                                    "parent_initiative_id": "0",
-                                    "name": "I5",
-                                    "description": "Demo Inititaive I5 with id 5",
-                                    "ragstatus": "N",
-                                    "duedate": "2016-01-01",
-                                    "viewinfo": {
-                                        "color": "#26334b",
-                                        "label": "initiative",
-                                        "hint": "I5",
-                                        "shape": "lightbulb",
-                                        "actions": [
-                                            {"id": "edit", "name": "Edit"},
-                                            {"id": "add_sub_initiative", "name": "Add Sub Initiative"},
-                                            {"id": "add_dependancy_new", "name": "Add Dependancy (NEW)"},
-                                            {"id": "add_dependancy_extend", "name": "Add Dependancy (EXTEND)"},
-                                            {"id": "add_dependancy_use", "name": "Add Dependancy (USE)"}
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "id": "3",
-                            "business_unit_id": "1",
-                            "name": "BO 1.2",
-                            "description": "Demo Sub Objective BO 1.2 with id 3",
-                            "parent_objective_id": "1",
-                            "viewinfo": {
-                                "color": "#26334b",
-                                "label": "objective",
-                                "hint": "BO 1.2",
-                                "shape": "small-circle",
-                                "actions": [
-                                    {"id": "edit", "name": "Edit"},
-                                    {"id": "add_initiative", "name": "Add Initiative"}
-                                ]
-                            },
-                            "initiatives": [
-                                {
-                                    "id": "6",
-                                    "parent_initiative_id": "0",
-                                    "name": "I6",
-                                    "description": "Demo Inititaive I6 with id 6",
-                                    "ragstatus": "N",
-                                    "duedate": "2016-01-01",
-                                    "viewinfo": {
-                                        "color": "#26334b",
-                                        "label": "initiative",
-                                        "hint": "I6",
-                                        "shape": "lightbulb",
-                                        "actions": [
-                                            {"id": "edit", "name": "Edit"},
-                                            {"id": "add_sub_initiative", "name": "Add Sub Initiative"},
-                                            {"id": "add_dependancy_new", "name": "Add Dependancy (NEW)"},
-                                            {"id": "add_dependancy_extend", "name": "Add Dependancy (EXTEND)"},
-                                            {"id": "add_dependancy_use", "name": "Add Dependancy (USE)"}
-                                        ]
-                                    },
-                                    "initiatives": [
-                                        {
-                                            "id": "7",
-                                            "parent_initiative_id": "6",
-                                            "name": "I6.1",
-                                            "description": "Demo Sub Inititaive I6.1 with id 7",
-                                            "ragstatus": "N",
-                                            "duedate": "2016-01-01"
-                                        },
-                                        {
-                                            "id": "8",
-                                            "parent_initiative_id": "6",
-                                            "name": "I6.2",
-                                            "description": "Demo Sub Inititaive I6.2 with id 8",
-                                            "ragstatus": "N",
-                                            "duedate": "2016-01-01"
-                                        },
-                                        {
-                                            "id": "9",
-                                            "parent_initiative_id": "6",
-                                            "name": "I6.3",
-                                            "description": "Demo Sub Inititaive I6.3 with id 9",
-                                            "ragstatus": "N",
-                                            "duedate": "2016-01-01"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "initiatives": [
-                        {
-                            "id": "1",
-                            "parent_initiative_id": "0",
-                            "name": "I1",
-                            "description": "Demo Inititaive I1 with id 1",
-                            "ragstatus": "N",
-                            "duedate": "2016-01-01",
-                            "viewinfo": {
-                                "color": "#26334b",
-                                "label": "initiative",
-                                "hint": "I1",
-                                "shape": "lightbulb",
-                                "actions": [
-                                    {"id": "edit", "name": "Edit"},
-                                    {"id": "add_sub_initiative", "name": "Add Sub Initiative"},
-                                    {"id": "add_dependancy_new", "name": "Add Dependancy (NEW)"},
-                                    {"id": "add_dependancy_extend", "name": "Add Dependancy (EXTEND)"},
-                                    {"id": "add_dependancy_use", "name": "Add Dependancy (USE)"}
-                                ]
-                            }
-                        }
-                    ]
+            .factory('exploreGraph', data);
+    function data(ajaxRequest, Explorer) {
+        var data = {};
+
+        data.data = function (id) {
+
+            return  ajaxRequest.send('structure/bu/' + id);
+        };
+        data.create = function (data) {
+            var elem = document.getElementById('explorer');
+            elem.innerHTML = '';
+            var explorer = '';
+            var explorer = new Explorer(elem, {
+                shapeAttributes: {
+                    circle: {fill: "red"},
+                    lightbulb: {fill: 'green'},
                 },
-                {
-                    "id": "4",
-                    "business_unit_id": "1",
-                    "name": "BO 2",
-                    "description": "Demo Objective BO 2 with id 4",
-                    "parent_objective_id": "0",
-                    "viewinfo": {
-                        "color": "#26334b",
-                        "label": "Objective",
-                        "hint": "BO 2",
-                        "shape": "circle",
-                        "actions": [
-                            {"id": "edit", "name": "Edit"},
-                            {"id": "add_sub_objective", "name": "Add Objective"},
-                            {"id": "add_initiative", "name": "Add Initiative"}
-                        ]
-                    },
-                    "initiatives": [
-                        {
-                            "id": "2",
-                            "parent_initiative_id": "0",
-                            "name": "I2",
-                            "description": "Demo Inititaive I2 with id 2",
-                            "ragstatus": "N",
-                            "duedate": "2016-01-01",
-                            "viewinfo": {
-                                "color": "#26334b",
-                                "label": "initiative",
-                                "hint": "I2",
-                                "shape": "lightbulb",
-                                "actions": [
-                                    {"id": "edit", "name": "Edit"},
-                                    {"id": "add_sub_initiative", "name": "Add Sub Initiative"},
-                                    {"id": "add_dependancy_new", "name": "Add Dependancy (NEW)"},
-                                    {"id": "add_dependancy_extend", "name": "Add Dependancy (EXTEND)"},
-                                    {"id": "add_dependancy_use", "name": "Add Dependancy (USE)"}
-                                ]
-                            }
-                        },
-                        {
-                            "id": "3",
-                            "parent_initiative_id": "0",
-                            "name": "I3",
-                            "description": "Demo Inititaive I3 with id 3",
-                            "ragstatus": "N",
-                            "duedate": "2016-01-01",
-                            "viewinfo": {
-                                "color": "#26334b",
-                                "label": "initiative",
-                                "hint": "I3",
-                                "shape": "lightbulb",
-                                "actions": [
-                                    {"id": "edit", "name": "Edit"},
-                                    {"id": "add_sub_initiative", "name": "Add Sub Initiative"},
-                                    {"id": "add_dependancy_new", "name": "Add Dependancy (NEW)"},
-                                    {"id": "add_dependancy_extend", "name": "Add Dependancy (EXTEND)"},
-                                    {"id": "add_dependancy_use", "name": "Add Dependancy (USE)"}
-                                ]
-                            }
-                        }
-                    ]
+                actionCallback: function (action, tree, node) {
+//                    console.log('[Callback] Action "' + action + '" performed: ', 'Explorer=', tree, 'Node=', node);
                 }
-            ]
-        }
+            });
+            explorer.draw(data);
+
+//            elem.addEventListener('action', function (evt) {
+//                var data = evt.data;
+////                console.log('[HTMLElement bind] Action "' + data.action + '" performed: ', 'Explorer=', data.treeContext, 'Node=', data.nodeContext);
+//            });
+
+
+            return explorer;
+        };
+        return data;
+
     }
     ;
     function exploreCtrl()
@@ -842,4 +622,3 @@
     }
     ;
 })();
-

@@ -6,7 +6,7 @@
     {
         $stateProvider
                 .state('main.explore', {
-                    url: "/explore",
+                    url: "/explore/:id",
                     templateUrl: "explore/explore.html",
                     controller: 'ExploreCtrl'
                 });

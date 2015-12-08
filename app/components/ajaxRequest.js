@@ -26,8 +26,8 @@ ajaxService.factory('ajaxRequest',
                         return def.promise;
                     },
                     send: function (api, data, method) {
-			console.log("under Ajax");
-	
+                        console.log("under Ajax");
+
                         var self = this;
                         if (!angular.isDefined(method)) {
                             method = 'POST';
@@ -47,17 +47,89 @@ ajaxService.factory('ajaxRequest',
                             timeout: 60000
                         });
                         http.success(function (data) {
-				console.log(data);
-				
+                            console.log(data);
+
                             def.resolve(data);
-				return data;
-				
+                            return data;
+
                         });
                         http.error(function (data) {
-				console.log(data);
-				
+                            console.log(data);
+
                             def.reject(data);
-				return data;
+                            return data;
+                        });
+                        return def.promise;
+                    },
+                    apiPost: function (api, data, method) {
+                        console.log("under Ajax");
+
+                        var self = this;
+                        if (!angular.isDefined(method)) {
+                            method = 'POST';
+                        } else {
+                            if (method === true) {
+                                method = 'POST';
+                            }
+                        }
+                        var def = $q.defer();
+//                        delete $http.defaults.headers.common['X-Requested-With'];
+                        var http = $http({
+                            url: this.url(api),
+                            method: method,
+                            headers: {'Content-Type': 'application/json;charset=utf-8'},
+                            cache: false,
+                            data: JSON.stringify(data),
+                            timeout: 60000
+                        });
+                        http.success(function (data) {
+                            console.log(data);
+
+                            def.resolve(data);
+                            return data;
+
+                        });
+                        http.error(function (data) {
+                            console.log(data);
+
+                            def.reject(data);
+                            return data;
+                        });
+                        return def.promise;
+                    },
+                    apiGet: function (api, data, method) {
+                        console.log("under Ajax");
+
+                        var self = this;
+                        if (!angular.isDefined(method)) {
+                            method = 'GET';
+                        } else {
+                            if (method === true) {
+                                method = 'GET';
+                            }
+                        }
+                        var def = $q.defer();
+//                        delete $http.defaults.headers.common['X-Requested-With'];
+                        var http = $http({
+                            url: this.url(api),
+                            method: method,
+                            headers: {'Content-Type': 'application/json;charset=utf-8'},
+                            cache: false,
+                            data: JSON.stringify(data),
+                            timeout: 60000
+                        });
+                        http.success(function (data) {
+                            console.log(data);
+
+                            def.resolve(data);
+                            return data;
+
+                        });
+                        http.error(function (data) {
+                            console.log(data);
+
+                            def.reject(data);
+                            return data;
                         });
                         return def.promise;
                     }

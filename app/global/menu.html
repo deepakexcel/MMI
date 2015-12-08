@@ -136,6 +136,12 @@
                                     <li><a ui-sref="main.explore">Explore</a></li>
                                 </ul>
                             </li>
+                            <li class="dropdown" ng-show="exploreMenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
+                                <ul class="dropdown-menu">         
+                                    <li><a ui-sref="main.explore({id:1})" ng-click="checkMenu('exploreMenu')">Explore</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
 
@@ -147,10 +153,11 @@
                             </div>
                         </div>
                         <div class=" pull-left meta" style="padding-left: 10px">
-                            <div class="page" ng-hide="summaryMenu || visualizationMenu || adminMenu">Dashboard</div>
+                            <div class="page" ng-hide="summaryMenu || visualizationMenu || adminMenu || exploreMenu">Dashboard</div>
                             <div class="page" ng-if="summaryMenu">Summary</div>
                             <div class="page" ng-if="visualizationMenu">Visualization</div>
                             <div class="page" ng-if="adminMenu">Admin</div>
+                            <div class="page" ng-if="exploreMenu">Explore</div>
                             <div class="breadcrumb-links" ng-click="checkMenu()">
                                 <a ui-sref="main.start">Home</a>
                             </div>  
@@ -169,4 +176,3 @@
 <!--</nav>-->
 
 <!--<div ui-view></div>-->
-

@@ -22,8 +22,8 @@
                     <table class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
-                                <th ng-click="sortPage('short_code')" style="cursor:pointer;" >Shortcode&nbsp;<span ng-show="show1=='a'" class="{{icon2}}" style="float:right;"></span></th>
-                                <th ng-click="sortPage('name')" style="cursor:pointer;" >Name&nbsp;<span ng-show="show2=='a'" class="{{icon2}}" style="float:right;"></span></th>
+                                <th ng-click="sortPage('short_code')" style="cursor:pointer;" >Shortcode&nbsp;<span ng-show="show1 == 'a'" class="{{icon2}}" style="float:right;"></span></th>
+                                <th ng-click="sortPage('name')" style="cursor:pointer;" >Name&nbsp;<span ng-show="show2 == 'a'" class="{{icon2}}" style="float:right;"></span></th>
                                 <th style="min-width: 170px;">Actions</th>
                             </tr>
                         </thead>
@@ -51,49 +51,51 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <add-edit-modal node="item" btn="buttonShow" >
 
-                        <div class="modal fade" id="unit_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">{{model_title}}</h4>
-                                    </div>
-                                    <div class="modal-body">
-
-
-                                        <form>
-                                            <div class="form-group {{errorShortCode}}">
-                                                <label>Short Code</label>
-                                                <input type="text" value="{{item.short_code}}" ng-model="item.short_code" class="form-control" id="short_code" placeholder="Short Code" ng-focus="errorHideShort()">
-                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="shortCodeClose"></span>
-                                            </div>
-                                            <div class="form-group {{errorUnitName}}">
-                                                <label>Name</label>
-                                                <input type="text" value="{{item.name}}" ng-model="item.name" class="form-control" id="name" placeholder="Name" ng-focus="errorHideUnit()">
-                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="unitNameClose"></span>
-                                            </div>
-
-                                            <div class="form-group {{errorOrgLevel}}">
-                                                <label>Org-Level</label>
-                                                <input type="number" value="{{item.org_level}}" ng-model="item.org_level" class="form-control" id="orglevel" placeholder="Org-Level" ng-focus="errorHideOrg()">
-                                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="orgClose"></span>
-                                            </div>
-                                        </form>
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;">
-
-                                        </div>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button ng-click="saveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                                        <button ng-click="editRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                        </add-edit-modal>
+                        <!--                        <div class="modal fade" id="unit_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title">{{model_title}}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                        
+                        
+                                                                <form>
+                                                                    <div class="form-group {{errorShortCode}}">
+                                                                        <label>Short Code</label>
+                                                                        <input type="text" value="{{item.short_code}}" ng-model="item.short_code" class="form-control" id="short_code" placeholder="Short Code" ng-focus="errorHideShort()">
+                                                                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="shortCodeClose"></span>
+                                                                    </div>
+                                                                    <div class="form-group {{errorUnitName}}">
+                                                                        <label>Name</label>
+                                                                        <input type="text" value="{{item.name}}" ng-model="item.name" class="form-control" id="name" placeholder="Name" ng-focus="errorHideUnit()">
+                                                                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="unitNameClose"></span>
+                                                                    </div>
+                        
+                                                                    <div class="form-group {{errorOrgLevel}}">
+                                                                        <label>Org-Level</label>
+                                                                        <input type="number" value="{{item.org_level}}" ng-model="item.org_level" class="form-control" id="orglevel" placeholder="Org-Level" ng-focus="errorHideOrg()">
+                                                                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="orgClose"></span>
+                                                                    </div>
+                                                                </form>
+                        
+                        
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;">
+                        
+                                                                </div>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button ng-click="saveItem();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
+                                                                <button ng-click="editRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
+                                                            </div>
+                                                        </div> /.modal-content 
+                                                    </div> /.modal-dialog 
+                                                </div> /.modal -->
 
 
                         <!--Delete Error Modal -->
@@ -115,33 +117,33 @@
                         </div><!-- /.modal -->
 
                     </table>
-		<div class="widget-header" style="height:60px;">
-	<div style="float:left;">
-            <form class="form-inline">
-            Page Size:
-            <select class="form-control" id="sel1" name="limit" style="width:80px;" ng-model="pageSize" ng-options="limit.value as limit.value for limit in limits" ng-init="pageSize='5'" ng-change="update()">
-            </select></form></div>
-            <div>
-		<nav>
-  <ul class="pagination" style="margin:0 auto; float:right;">
-    <li ng-click="prevPage()">
-      <a href="#" aria-label="Previous" style="cursor:pointer;">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li ng-moel="first" ng-click="goPage(first)" class="{{active[0]}}"><a style="cursor:pointer;">{{first}}</a></li>
-		
-		<li ng-moel="last" ng-click="goPage(last)" class="{{active[1]}}"><a style="cursor:pointer;">{{last}}</a></li>
-    
-    <li ng-click="nextPage()">
-      <a href="#" aria-label="Next" style="cursor:pointer;">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-</div>
+                    <div class="widget-header" style="height:60px;">
+                        <div style="float:left;">
+                            <form class="form-inline">
+                                Page Size:
+                                <select class="form-control" id="sel1" name="limit" style="width:80px;" ng-model="pageSize" ng-options="limit.value as limit.value for limit in limits" ng-init="pageSize = '5'" ng-change="update()">
+                                </select></form></div>
+                        <div>
+                            <nav>
+                                <ul class="pagination" style="margin:0 auto; float:right;">
+                                    <li ng-click="prevPage()">
+                                        <a href="#" aria-label="Previous" style="cursor:pointer;">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li ng-moel="first" ng-click="goPage(first)" class="{{active[0]}}"><a style="cursor:pointer;">{{first}}</a></li>
+
+                                    <li ng-moel="last" ng-click="goPage(last)" class="{{active[1]}}"><a style="cursor:pointer;">{{last}}</a></li>
+
+                                    <li ng-click="nextPage()">
+                                        <a href="#" aria-label="Next" style="cursor:pointer;">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>

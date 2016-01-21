@@ -347,7 +347,6 @@ ul.sidebar .sidebar-list .menu-icon {
   display: none;
   height: 0px;
   text-indent: -100px;
-  font-size: 15px;
 }
 #page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
   display: block;

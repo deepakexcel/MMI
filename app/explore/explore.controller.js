@@ -8,6 +8,7 @@
         $scope.id = $stateParams.id;
         $rootScope.$emit('checkMenu', {view: 'menuExplore'});
         var self = this;
+	
         self.graph = function () {
             var data = exploreGraph.data($scope.id);
             data.then(function (data) {
@@ -69,6 +70,7 @@
                     else if (action == "bi.edit" || action == 'bi.add')
                     {
                         console.log($rootScope.parentList);
+			$scope.$emit('modal-in-show');
                         var parent_name;
                         for (var j = 0; j < $rootScope.parentList.length; j++) {
                             if (node.parent_initiative_id == $rootScope.parentList[j].initiativeId) {
@@ -77,6 +79,12 @@
                         }
                         if (action != 'bi.add')
                         {
+ 			var item = ajaxRequest.send('bi/find?id='+node.id+'');
+				item.then(function(data){
+				$scope.item3.ragstatus=data.ragstatus;
+				$scope.item3.duedate=data.duedate;
+			
+				});
                             $scope.item3 = {
                                 id: node.id,
                                 initiative_name: node.name,
@@ -86,13 +94,18 @@
                                 parent_name: parent_name
 
                             };
+			console.log($scope.item3);
+			$scope.$emit('modal-in-show',true);
                         }
                         else
                         {
                             $scope.item3 = {};
                             var type = {type: true};
+				console.log("null");
+				$scope.$emit('modal-in-show',true);
+				//$scope.$emit('modal-obj-show',true);
                         }
-                        $rootScope.$emit('modal-in-show', type);
+                        //$rootScope.$emit('modal-in-show', type);
                     }
 //                console.log('[Explorer bind] Action "' + data.action + '" performed: ', 'Explorer=', data.treeContext, 'Node=', data.nodeContext);
                 });
@@ -127,3 +140,4 @@
     }
     ;
 })();
+

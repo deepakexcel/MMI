@@ -126,23 +126,44 @@ globalMod.controller('GlobalCtrl', ['$scope', 'ajaxRequest', '$state', '$localSt
         };
         $rootScope.$on('save-changes-in', function (eve, data) {
 
-            $scope.item3 = data;
+            $scope.item3 = data.data;
             console.log(data);
+            var type = data.type;
             var parent_id = 0;
-
+            var url = '';
             parent_id = $scope.item3.parent_id;
-            var url = 'bi/update';
+            if (!type)
+            {
+                url = 'bi/update';
+            }
+            else {
+
+                url = 'bi/add';
+            }
+            var myobj = {};
             //Id needs to be included to the API call:
-            var val = {"id": $scope.item3.id, "parent_initiative_id": parent_id, "description": $scope.item3.description, "name": $scope.item3.initiative_name, "parent_name": $scope.item3.parent_initiative, "status": false};
-            var values = {"id": $scope.item3.id, "parent_initiative_id": parent_id, "name": $scope.item3.initiative_name, "description": $scope.item3.description};
+            var val = {"id": $scope.item3.id, "parent_initiative_id": parent_id, "ragstatus": $scope.item3.ragstatus, "duedate": $scope.item3.duedate, "description": $scope.item3.description, "name": $scope.item3.initiative_name, "parent_name": $scope.item3.parent_initiative, "status": false};
+            var values = {"id": $scope.item3.id, "ragstatus": $scope.item3.ragstatus, "duedate": $scope.item3.duedate, "parent_initiative_id": parent_id, "name": $scope.item3.initiative_name, "description": $scope.item3.description};
             console.log("Going to send update. Values listed below:");
             var promise = ajaxRequest.send(url, values, 'POST');
             promise.then(
                     function (result) {
                         if (result.status == "OK") {
-                            $scope.initiative_list.splice($scope.item3.index, 1, val);
+//                          
                             $scope.saveLoading = false;
-                            $rootScope.$broadcast('modal-close-in', val);
+                            if (!type)
+                                $rootScope.$broadcast('modal-close-in', {data: val, type: type});
+                            else {
+                                myobj.id = result.lastid;
+                                myobj.name = $scope.item3.initiative_name;
+                                myobj.parent_initiative_id = parent_id;
+                                myobj.description = $scope.item3.description;
+                                myobj.duedate = $scope.item3.duedate;
+                                myobj.ragstatus = $scope.item3.ragstatus;
+                                myobj.status = false;
+                                myobj.parent_name = $scope.item3.parent_initiative;
+                                $rootScope.$broadcast('modal-close-in', {data: myobj, type: type});
+                            }
                         } else {
 
                             $rootScope.$broadcast('modal-close-in');
@@ -172,9 +193,10 @@ globalMod.controller('GlobalCtrl', ['$scope', 'ajaxRequest', '$state', '$localSt
                 url = 'bo/update';
             }
             else {
-                var myobj = {};
+
                 url = 'bo/add';
             }
+            var myobj = {};
             //Id needs to be included to the API call:
             var val = {"id": $scope.item2.id, "business_unit_id": bussUnit, "description": $scope.item2.description, "name": $scope.item2.objective_name, "unit_name": $scope.item2.business_unit, "status": false};
             var values = {"id": $scope.item2.id, "business_unit_id": bussUnit, "description": $scope.item2.description, "name": $scope.item2.objective_name};

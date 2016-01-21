@@ -1,22 +1,44 @@
 angular.module('MMI.dir', [])
-        .directive('addEditModal', addEditUnit)
-        .directive('addEditObj', addEditObj)
-        .directive('addEditIn', addEditIn);
-function addEditIn($timeout, $rootScope) {
+        .directive('addEditModal', addEditBusinessUnit)
+        .directive('addEditObj', addEditBusinessObjective)
+        .directive('addEditIn', addEditbusinessInitiative);
+function addEditbusinessInitiative($timeout, $rootScope,downDrillService) {
+console.log("gdugsu");
     var modal = {
     };
     modal.restrict = 'E';
     modal.scope = {
         item: '=node',
         parentList2: '=unit',
-        buttonShow: '=btn'
+        buttonShow: '=btn',
+        selectedAction: '=sel'
     };
     modal.templateUrl = 'global/dir-template/addeditin.html';
-    modal.controller = function ($scope, $rootScope) {
-        $rootScope.$on('modal-close-obj', function () {
+    modal.controller = function ($scope, $rootScope, $localStorage) {
+        $rootScope.$on('modal-close-in', function () {
             $scope.saveLoading = false;
             $('#initiative_Modal').modal('hide');
         });
+	console.log($localStorage['ragObj']);
+        $scope.actions = $localStorage['ragObj'];
+        $scope.selectedAction = $scope.actions[0];
+
+        $scope.setAction = function (action) {
+	$scope.item.ragstatus=action.id;
+            console.log(action);
+            $scope.selectedAction = action;
+//            $scope.submit();
+        };
+//        var op = 'N';
+//        $scope.submit = function () {
+//            console.log($scope.selectedAction.id);
+//            op = $scope.selectedAction.id;
+//        };
+
+        $scope.open = function ($event) {
+            console.log('ok')
+            $scope.status.opened = true;
+        };
         $scope.hideAlert = function () {
             $timeout(function () {
                 $scope.alertmsg = false;
@@ -35,6 +57,7 @@ function addEditIn($timeout, $rootScope) {
             $scope.findClose = false;
         }
         $scope.editInitiativeRecord = function (indexx) {
+console.log('	baebalb');
             if (!$scope.item.initiative_name && !$scope.item.parent_initiative) {
                 $scope.errorName = "has-error has-feedback";
                 $scope.nameClose = true;
@@ -48,20 +71,28 @@ function addEditIn($timeout, $rootScope) {
             } else if (!$scope.item.parent_initiative) {
                 $scope.errorUnitName = "has-error has-feedback";
                 $scope.selectClose = true;
-            } else {
+            }
+            else if (!$scope.item.duedate) {
+                $scope.errorUnitName = "has-error has-feedback";
+                $scope.selectClosed = true;
+            }
+            else {
                 $scope.saveLoading = true;
 
                 for (var i = 0; i < $scope.parentList2.length; i++) {
-
                     if ($scope.parentList2[i].initiativeName == $scope.item.parent_initiative) {
                         $scope.item.parent_id = $scope.parentList2[i].initiativeId;
+                        $scope.item.ragstatus = $scope.selectedAction.id;
                     }
                 }
                 console.log($scope.item);
-                $rootScope.$emit('save-changes-in', $scope.item);
+                $rootScope.$emit('save-changes-in', {data: $scope.item, type: $scope.buttonShow});
             }
         };
-
+        $scope.errorHideDate = function () {
+            $scope.errorName = "";
+            $scope.selectClosed = false;
+        };
         $scope.hideAlert = function () {
             $timeout(function () {
                 $scope.alertmsg = false;
@@ -83,13 +114,21 @@ function addEditIn($timeout, $rootScope) {
     modal.link = function (scope, elem, attr) {
 
         $rootScope.$on('modal-in-show', function (ev, data) {
+	console.log("innnnnn");
             if (data)
+            {
+
+
                 scope.buttonShow = data.type;
+            }
             else
+            {
                 scope.buttonShow = false;
+            }
             $timeout(function () {
                 console.log(scope.parentList);
                 console.log(scope.item);
+
                 $('#initiative_Modal').modal({backdrop: true})
             }, 500);
 
@@ -100,7 +139,7 @@ function addEditIn($timeout, $rootScope) {
     return modal;
 
 }
-function addEditObj($timeout, $rootScope) {
+function addEditBusinessObjective($timeout, $rootScope) {
     var modal = {
     };
     modal.restrict = 'E';
@@ -182,7 +221,7 @@ function addEditObj($timeout, $rootScope) {
     return modal;
 }
 ;
-function addEditUnit($timeout, $rootScope) {
+function addEditBusinessUnit($timeout, $rootScope) {
     var modal = {
     };
     modal.restrict = 'E';

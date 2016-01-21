@@ -17,7 +17,7 @@
 <div class="col-lg-10" style="width: 100% ! important; padding-left: 10px;">
     <div class="widget">
         <div class="widget-header">
-            <h4 style="float: left;"><span class="menu-icon fa fa-cubes"></span> Business Capabilities List</h4>
+            <h4 style="float: left;"><span class="menu-icon fa fa-battery-full"></span> Business Capabilities List</h4>
             <div class="input-group {{errorFind}}">
                 <input type="text" class="form-control" ng-model="search" placeholder="Search for..." style="width: 40%; float: right;" ng-focus="findError()" aria-describedby="inputError2Status">
                 <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="findClose"></span>
@@ -32,8 +32,8 @@
                     <thead>
                         <tr>
 
-                            <th>Name</th>
-                            <th>Description</th>
+                            <th ng-click="sortPage('name')" style="cursor:pointer;">Name&nbsp;<span ng-show="show1=='a'" class="{{icon2}}" style="float:right;"></span></th>
+                            <th ng-click="sortPage('description')" style="cursor:pointer;">Description&nbsp;<span ng-show="show2=='a'" class="{{icon2}}" style="float:right;"></span></th>
                             <th style="min-width: 170px;">Actions</th>
                         </tr>
                     </thead>
@@ -119,6 +119,32 @@
                     </div><!-- /.modal -->
 
                 </table>
+	<div class="widget-header" style="height:60px;">
+<div style="float:left;">
+            <form class="form-inline">
+            Page Size:
+            <select class="form-control" id="sel1" name="limit" style="width:80px;" ng-model="pageSize" ng-options="limit.value as limit.value for limit in limits" ng-init="pageSize='5'" ng-change="update()">
+            </select></form></div>
+            <div>
+		<nav>
+  <ul class="pagination" style="margin:0 auto; float:right;">
+    <li ng-click="prevPage()">
+      <a href="#" aria-label="Previous" style="cursor:pointer;">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li ng-moel="first" ng-click="goPage(first)" class="{{active[0]}}"><a style="cursor:pointer;">{{first}}</a></li>
+		<li ng-moel="middle" ng-click="goPage(middle)" class="{{active[1]}}"><a style="cursor:pointer;">{{middle}}</a></li>
+		<li ng-moel="last" ng-click="goPage(last)" class="{{active[2]}}"><a style="cursor:pointer;">{{last}}</a></li>
+    
+    <li ng-click="nextPage()">
+      <a href="#" aria-label="Next" style="cursor:pointer;">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div> 
             </div>
         </div>
     </div>

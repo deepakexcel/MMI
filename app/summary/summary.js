@@ -85,5 +85,9 @@ dashMod.controller('SummaryCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', '$
             $state.go('main.objectiveGrid', {a: unitId, b: unitDispName})
 //            $('#DelError_Modal').modal('show');
         }
+	$scope.drilldownGraph=function(){
+		$state.go('main.downDrill');	
+	}
 
     }]);
+

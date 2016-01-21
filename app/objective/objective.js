@@ -13,7 +13,6 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', 
             status: '',
             unit_name: ''
         };
-     
         $scope.loading = true;
         var unitList2 = [];
         var unit = ajaxRequest.send('lookups/bu/list');
@@ -309,3 +308,4 @@ dashMod.controller('ObjectiveCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', 
 
 
     }]);
+

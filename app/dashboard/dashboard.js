@@ -345,3 +345,4 @@ dashMod.controller('DashboardCtrl', ['$scope', 'ajaxRequest', '$q', '$timeout', 
 
 
     }]);
+

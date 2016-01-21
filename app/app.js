@@ -18,7 +18,9 @@ var app = angular.module('MMI', [
     'MMI.start',
     'MMI.graph',
     'MMI.explore',
-    'MMI.dir'
+    'MMI.dir',
+    'MMI.downDrill'
+	
 ]);
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -88,7 +90,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     templateUrl: "statrup/start.html?time=" + new Date().getTime(),
                     controller: 'StartCtrl'
                 })
-                .state('main.logout', {
+		
+		.state('main.logout', {
                     url: "/dashboard",
                     controller: function ($state, $localStorage) {
                         $localStorage.user = false;
@@ -97,3 +100,4 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 });
         $urlRouterProvider.otherwise('/main/start');
     }]);
+

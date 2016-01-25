@@ -28,16 +28,8 @@
             var node = data.nodeContext;
             var action = data.button.id;
             if (action == 'crud-edit-bi') {
-                $scope.contentValue = {
-                    id: node.id,
-                    initiative_name: node.name,
-                    parent_initiative: node.parent.name,
-                    description: node.description,
-                    status: node.ragstatus,
-                    parent_name: node.parent.name,
-                    duedate: node.duedate
-                };
-                $scope.$emit('modal-in-show');
+                $rootScope.contentValue = node;
+                $rootScope.$emit(action);
             } else {
                 $rootScope.event = action;
                 $state.go('error');

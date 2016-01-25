@@ -2,69 +2,73 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true" style="font-size:larger;">&times;</span></button><br>
-                <h4 class="modal-title">{{model_title}}</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group {{errorName}}">
-                        <label>Name</label>
-                        <input type="text" value="{{item.initiative_name}}" ng-model="item.initiative_name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
-                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
-                    </div>
-                    <div class="form-group {{errorUnitName}}">
-                        <label>Parent Initiative Name</label>
-                        <select class="form-control" ng-model="item.parent_initiative" value="" ng-focus="errorHideSelect()">
-                            <option  ng-repeat="parentitem in parentList2 track by $index">{{parentitem.initiativeName}}</option>
-                        </select>
-                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input type="text" value="{{item.description}}" ng-model="item.description" class="form-control" id="desc" placeholder="Description">
-                    </div>
-                    <div class="form-group {{errorName}}">
-                        <div class="row">
-                            <label>Due Date</label>
-                            <div class="col myclass">
-                                <p class="input-group" style="width:100% !important">
-                                    <input   ng-focus="errorHideDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}" value="{{item.duedate}}" ng-model="item.duedate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-
-                                    <span class="input-group-btn" >
-                                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClosed"></span>
-                                        <button ng-hide="selectClosed" type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <span aria-hidden="true" style="font-size:larger;">&times;</span>
+                </button>
+                <br>
+                    <h4 class="modal-title">{{model_title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
                         <div class="form-group {{errorName}}">
-                            <div class="row">
-                                <label>Rag status</label>
-                                <div class="col myclass">
-                                    <div class="btn-group" uib-dropdown is-open="status.isopen">
-                                        <button id="single-button" type="button" class="btn btn-primary {{selectedAction.color}} my" uib-dropdown-toggle ng-click="submit()">
-                                            {{item.ragstatus}}<span class="caret my1"></span>
-                                        </button>
-                                        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-                                            <li role="menuitem"  ng-repeat="action in actions">
-                                                <a href="#" ng-click="setAction(action)">{{action.id}}</a>
-                                            </li>
-                                        </ul>
+                            <label>Name</label>
+                            <input type="text" value="{{item.name}}" ng-model="item.name" ng-focus="errorHideName()" class="form-control" id="short_code" placeholder="Name">
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="nameClose"></span>
+                            </div>
+                            <div class="form-group {{errorUnitName}}">
+                                <label>Parent Initiative Name</label>
+                                <select class="form-control" ng-model="item.parent.name" value="" ng-focus="errorHideSelect()">
+                                    <option  ng-repeat="parentitem in parentList2 track by $index">{{parentitem.initiativeName}}</option>
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClose"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" value="{{item.description}}" ng-model="item.description" class="form-control" id="desc" placeholder="Description">
+                                </div>
+                                <div class="form-group {{errorName}}">
+                                    <div class="row">
+                                        <label>Due Date</label>
+                                        <div class="col myclass">
+                                            <p class="input-group" style="width:100% !important">
+                                                <input   ng-focus="errorHideDate()" type="text" class="form-control" uib-datepicker-popup="{{format}}" value="{{item.duedate}}" ng-model="item.duedate" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                                <span class="input-group-btn" >
+                                                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="selectClosed"></span>
+                                                    <button ng-hide="selectClosed" type="button" class="btn btn-default" ng-click="open($event)">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group {{errorName}}">
+                                        <div class="row">
+                                            <label>Rag status</label>
+                                            <div class="col myclass">
+                                                <div class="btn-group" uib-dropdown is-open="status.isopen">
+                                                    <button id="single-button" type="button" class="btn btn-primary {{selectedAction.color}} my" uib-dropdown-toggle ng-click="submit()">
+                                            {{item.ragstatus}}
+                                                        <span class="caret my1"></span>
+                                                    </button>
+                                                    <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                                                        <li role="menuitem"  ng-repeat="action in actions">
+                                                            <a href="#" ng-click="setAction(action)">{{action.id}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </form>
+                            <div class="modal-footer">
+                                <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;"></div>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button ng-click="editInitiativeRecord();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
+                                <button ng-click="editInitiativeRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
                             </div>
                         </div>
+                        <!-- /.modal-content -->
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <div class="three-quarters-loader" ng-show="saveLoading" style="margin: 0px 5px -7px 0;">
-                    </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button ng-click="editInitiativeRecord();" type="button" ng-show="buttonShow" class="btn btn-danger">Save</button>
-                    <button ng-click="editInitiativeRecord($index);" type="button" ng-hide="buttonShow" class="btn btn-danger">Save changes</button>
+                    <!-- /.modal-dialog -->
                 </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>

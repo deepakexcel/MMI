@@ -27,12 +27,8 @@
             var data = evt.data;
             var node = data.nodeContext;
             var action = data.button.id;
-            console.log(node);
-            console.log(action);
-            $scope.model_title = 'Edit Business Unit';
-            if (action == 'crud-edit-bi' || action == 'crud-add-bi') {
-                console.log("bi");
-                $scope.item3 = {
+            if (action == 'crud-edit-bi') {
+                $scope.contentValue = {
                     id: node.id,
                     initiative_name: node.name,
                     parent_initiative: node.parent.name,
@@ -40,12 +36,10 @@
                     status: node.ragstatus,
                     parent_name: node.parent.name,
                     duedate: node.duedate
-
                 };
-                $scope.$emit('modal-obj-show');
+                $scope.$emit('modal-in-show');
             } else {
                 $rootScope.event = action;
-                console.log($scope.event);
                 $state.go('error');
             }
         });

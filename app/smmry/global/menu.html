@@ -15,7 +15,7 @@
                                 <span class="menu-icon fa fa-sun-o"  ng-click="checkMenu('summaryMenu')"></span></a>
                         </li>-->
 
-            <li class="sidebar-list" ng-click="checkMenu('visualizationMenu')"><a ui-sref="main.graph({graph:'Objectives'})" ><span>Visualization</span><span class="menu-icon glyphicon glyphicon-equalizer"></span></a></li>
+            <!--<li class="sidebar-list" ng-click="checkMenu('visualizationMenu')"><a ui-sref="main.graph({graph:'Objectives'})" ><span>Visualization</span><span class="menu-icon glyphicon glyphicon-equalizer"></span></a></li>-->
             <!--            <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.graph({graph:'Objectives'})" >Objectives
                                 <span class="menu-icon glyphicon glyphicon-stats" ng-click="checkMenu('visualizationMenu')"></span></a>
                         </li>
@@ -23,7 +23,7 @@
                                 <span class="menu-icon fa fa-bar-chart-o" ng-click="checkMenu('visualizationMenu')"></span></a>
                         </li>-->
 
-            <li class="sidebar-list" ng-click="checkMenu('adminMenu')"><a ui-sref="main.dashboard"><span>Admin</span><span class="menu-icon glyphicon glyphicon-wrench"></span></a></li>
+            <!--<li class="sidebar-list" ng-click="checkMenu('adminMenu')"><a ui-sref="main.dashboard"><span>Admin</span><span class="menu-icon glyphicon glyphicon-wrench"></span></a></li>-->
             <!--            <li class="sidebar-list" ng-hide="menuHide"><a ui-sref="main.dashboard">Business Unit
                                 <span class="menu-icon glyphicon glyphicon-xbt" ng-click="checkMenu('adminMenu')"></span></a>
                         </li>
@@ -104,45 +104,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <ul class="nav navbar-nav navbar-right" style="margin-top: 5px;">
-                            <li class="dropdown" ng-show="summaryMenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Summary <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-
-                                    <li><a ui-sref="main.summary" >Business Unit</a></li>
-
-
-                                </ul>
-                            </li>
-                            <li class="dropdown" ng-show="visualizationMenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Visualization <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-
-                                    <li><a ui-sref="main.graph({graph:'Objectives'})" >Objectives</a></li>
-                                    <li><a ui-sref="main.graph({graph:'Capabilities'})" >Capabilities</a></li>
-
-                                </ul>
-                            </li>
-                            <li class="dropdown" ng-show="adminMenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <!--<li><a  ng-if='!is_login' ui-sref="main.login">Login</a></li>
-                                    <li><a  ng-if='!is_login' ui-sref="main.register">Regsiter</a></li>
-                                    <li><a ng-if='is_login' ui-sref="main.logout">Logout</a></li>-->
-                                    <li><a ui-sref="main.dashboard">Business Unit</a></li>
-                                    <li><a ui-sref="main.objective">Business Objective</a></li>
-                                    <li><a ui-sref="main.initiative">Business Initiative</a></li>
-                                    <li><a ui-sref="main.capabilities">Business Capabilities</a></li>
-                                    <li><a ui-sref="main.explore">Explore</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown" ng-show="exploreMenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
-                                <ul class="dropdown-menu">         
-                                    <li><a ui-sref="main.explore({id:1})" ng-click="checkMenu('exploreMenu')">Explore</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                      
                     </div>
 
                     <div style="padding-top: 0px;">
@@ -152,23 +114,30 @@
 
                             </div>
                         </div>
-                        <div class=" pull-left meta" style="padding-left: 10px">
+                        <!--<div class=" pull-left meta" style="padding-left: 10px">
                             <div class="page" ng-hide="summaryMenu || visualizationMenu || adminMenu || exploreMenu">Dashboard</div>
                             <div class="page" ng-if="summaryMenu">Summary</div>
                             <div class="page" ng-if="visualizationMenu">Visualization</div>
                             <div class="page" ng-if="adminMenu">Admin</div>
                             <div class="page" ng-if="exploreMenu">Explore</div>
                             <div class="breadcrumb-links" ng-click="checkMenu()">
-                                <a ui-sref="main.start">Home</a>
+                                <p>Summary</p>
                             </div>  
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
             <!-- End Header Bar -->
 
             <!-- Main Content -->
-            <div ui-view></div>
+            
+  <div class="row">
+    <div class="col-md-6"><div ui-view="left"></div></div>
+    <div class="col-md-6"><div ui-view="right"></div></div>
+  </div>
+
+            
+            
 
         </div><!-- End Page Content -->
     </div><!-- End Content Wrapper -->

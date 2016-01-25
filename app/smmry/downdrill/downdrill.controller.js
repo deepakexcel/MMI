@@ -30,7 +30,8 @@
             console.log(node);
             console.log(action);
             $scope.model_title = 'Edit Business Unit';
-            if (action == "crud-edit-bi" || action == 'crud-add-bi') {
+            if (action == 'crud-edit-bi' || action == 'crud-add-bi') {
+                console.log("bi");
                 $scope.item3 = {
                     id: node.id,
                     initiative_name: node.name,
@@ -41,28 +42,12 @@
                     duedate: node.duedate
 
                 };
-                $scope.$emit('modal-in-show');
-            } else if (action == 'crud-edit-bo' || action == 'crud-edit-sbo' || action == 'crud-add-bo') {
-                $scope.item2 = {
-                    id: node.id,
-                    objective_name: node.name,
-                    business_unit: node.parent.name,
-                    description: node.description,
-                    unit_id: node.parent.id
-
-                };
-                console.log($scope.item2);
                 $scope.$emit('modal-obj-show');
-            } else if (action == 'crud-edit-bu') {
-                $scope.$emit('modal-show');
             } else {
                 $rootScope.event = action;
                 console.log($scope.event);
                 $state.go('error');
             }
-
-
-
         });
     };
 })();
